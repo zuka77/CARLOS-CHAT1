@@ -1,90 +1,6058 @@
-<!doctype html>
-<html lang="ka">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b0b10">
-<title>Carlos Chat — Social</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>NOVA Social</title>
+
 <style>
-:root{--bg:#09090d;--panel:#111117;--panel2:#17171f;--line:#252531;--text:#f5f5f7;--muted:#92929f;--accent:#a855f7;--accent2:#ec4899;--good:#22c55e;--danger:#ef4444;--shadow:0 18px 60px #0008}
-*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif}button,input,textarea{font:inherit}button{cursor:pointer;border:0;color:inherit}.hidden{display:none!important}
-body{min-height:100vh}.app{min-height:100vh}.top{height:76px;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#09090df2;backdrop-filter:blur(20px);z-index:20}.brand{font-weight:900;font-size:30px;letter-spacing:-1.8px;background:linear-gradient(90deg,#8b5cf6,#ec4899);-webkit-background-clip:text;color:transparent}.top-actions{display:flex;gap:10px}.iconbtn{width:46px;height:46px;border-radius:50%;background:var(--panel2);display:grid;place-items:center}.iconbtn svg{width:22px;height:22px}
-.layout{max-width:1150px;margin:auto;display:grid;grid-template-columns:220px minmax(0,650px) 250px;gap:22px;padding:22px 18px 95px}.side{position:sticky;top:98px;height:max-content}.nav{display:grid;gap:8px}.nav button{background:transparent;text-align:left;padding:13px 14px;border-radius:15px;color:var(--muted);display:flex;align-items:center;gap:12px}.nav button.active,.nav button:hover{background:var(--panel2);color:#fff}.nav svg{width:21px;height:21px}.profile-mini{margin-top:18px;padding:14px;background:var(--panel);border:1px solid var(--line);border-radius:18px;display:flex;gap:10px;align-items:center}.avatar{width:42px;height:42px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,#8b5cf6,#ec4899);display:grid;place-items:center;font-weight:800}.avatar.big{width:86px;height:86px;font-size:26px}.mini-name{font-weight:700}.muted{color:var(--muted);font-size:13px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;overflow:hidden;margin-bottom:16px}.card-pad{padding:16px}.composer{display:flex;gap:12px}.composer textarea{flex:1;background:var(--panel2);border:1px solid var(--line);border-radius:16px;color:#fff;resize:none;padding:13px;min-height:48px;outline:none}.composer textarea:focus{border-color:#6d28d9}.primary{background:linear-gradient(90deg,#8b5cf6,#ec4899);padding:10px 17px;border-radius:13px;font-weight:800}.secondary{background:var(--panel2);padding:10px 14px;border-radius:13px}.row{display:flex;align-items:center;gap:10px}.between{justify-content:space-between}.post-head{display:flex;gap:11px;align-items:center}.post-name{font-weight:800}.badge{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;background:#38bdf8;color:white;font-size:10px;font-weight:900;margin-left:4px}.post-media{width:100%;max-height:620px;object-fit:cover;background:#050507}.post-text{font-size:15px;line-height:1.55;white-space:pre-wrap}.actions{display:flex;gap:4px;margin-top:8px}.act{background:transparent;padding:9px;border-radius:11px;color:var(--muted);display:flex;align-items:center;gap:6px}.act:hover{background:var(--panel2);color:#fff}.act.liked{color:#fb7185}.act.saved{color:#fbbf24}.act svg{width:20px;height:20px}.section-title{font-size:21px;font-weight:900;margin:4px 0 14px}.people{display:grid;gap:9px}.person{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--line);background:var(--panel);border-radius:16px}.person-info{flex:1}.online{width:9px;height:9px;border-radius:50%;background:var(--good);box-shadow:0 0 12px #22c55e}.stories{display:flex;gap:12px;overflow:auto;padding-bottom:5px}.story{min-width:76px;text-align:center}.story-ring{width:64px;height:64px;border-radius:50%;padding:2px;background:linear-gradient(135deg,#f59e0b,#ec4899,#8b5cf6);margin:auto}.story-ring img{width:100%;height:100%;object-fit:cover;border-radius:50%;border:3px solid var(--panel)}.story span{display:block;font-size:11px;color:var(--muted);margin-top:5px;overflow:hidden;text-overflow:ellipsis}
-.bottom{display:none}.screen{min-width:0}.right-card{padding:15px}.search{display:flex;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px 12px;gap:8px}.search input{border:0;background:transparent;color:white;outline:0;width:100%}
-.chat-overlay{position:fixed;inset:0;background:#050508;z-index:60;display:flex;flex-direction:column}.chat-top{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:10px 14px;gap:10px}.chat-title{flex:1}.chat-title b{display:block}.chat-title span{font-size:12px;color:var(--muted)}.chat-messages{flex:1;overflow:auto;padding:18px 16px;display:flex;flex-direction:column;gap:8px}.bubble{max-width:78%;padding:10px 13px;border-radius:18px;background:var(--panel2);align-self:flex-start;line-height:1.4;position:relative}.bubble.mine{align-self:flex-end;background:linear-gradient(135deg,#7c3aed,#db2777)}.bubble small{display:block;opacity:.55;font-size:10px;margin-top:4px}.bubble img,.bubble video{max-width:100%;border-radius:12px;display:block}.chat-compose{border-top:1px solid var(--line);padding:10px;display:flex;gap:7px;align-items:end;background:#0b0b10}.chat-compose textarea{flex:1;max-height:120px;min-height:42px;border:1px solid var(--line);background:var(--panel2);color:#fff;border-radius:17px;padding:11px;outline:0;resize:none}.typing{height:18px;padding:0 18px;color:var(--muted);font-size:12px}.auth{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at 50% 0,#5b21b633,transparent 40%)}.auth-box{width:min(420px,100%);background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:25px;box-shadow:var(--shadow)}.auth-box h1{margin:0 0 6px;font-size:32px}.auth-box p{color:var(--muted)}.field{margin:10px 0}.field input{width:100%;padding:13px;border-radius:13px;border:1px solid var(--line);background:var(--panel2);color:white;outline:0}.tabs{display:flex;background:var(--panel2);border-radius:14px;padding:4px;margin-bottom:16px}.tabs button{flex:1;padding:10px;border-radius:11px;background:transparent;color:var(--muted)}.tabs button.active{background:var(--panel);color:#fff}.notice{padding:11px;border-radius:12px;background:#3b0764;color:#ddd;margin:10px 0;font-size:13px}.modal{position:fixed;inset:0;background:#000a;z-index:80;display:grid;place-items:center;padding:18px}.modal-box{width:min(520px,100%);max-height:90vh;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:18px}.close{background:var(--panel2);width:38px;height:38px;border-radius:50%}.toast{position:fixed;bottom:92px;left:50%;transform:translateX(-50%);background:#fff;color:#111;padding:11px 16px;border-radius:14px;z-index:100;box-shadow:var(--shadow)}
-@media(max-width:900px){.layout{grid-template-columns:1fr;max-width:700px}.side.left,.side.right{display:none}.bottom{position:fixed;bottom:0;left:0;right:0;height:70px;background:#0d0d12f5;border-top:1px solid var(--line);display:flex;z-index:30;justify-content:space-around;padding-bottom:env(safe-area-inset-bottom)}.bottom button{background:transparent;color:var(--muted);display:grid;place-items:center;font-size:10px;gap:3px}.bottom svg{width:22px}.top{height:70px}.layout{padding-top:16px}.chat-overlay{padding-bottom:env(safe-area-inset-bottom)}}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#07070b;--card:#101018;--card2:#171720;--card3:#1d1d27;
+--text:#fff;--muted:#8d8d9b;--line:rgba(255,255,255,.08);
+--p:#8b5cf6;--pink:#ec4899;--red:#ff416c;--green:#35d07f
+}
+html,body{
+background:var(--bg);color:var(--text);min-height:100%;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+-webkit-tap-highlight-color:transparent
+}
+body{padding-bottom:78px;overflow-x:hidden}
+body.chat-open{padding-bottom:0;overflow:hidden}
+button,input,textarea{font:inherit}
+button{border:0;background:none;color:inherit;cursor:pointer}
+input,textarea{
+width:100%;background:var(--card2);color:var(--text);
+border:1px solid var(--line);border-radius:15px;padding:13px;outline:none
+}
+input:focus,textarea:focus{border-color:#8b5cf666}
+.app{max-width:680px;margin:auto}
+.top{
+height:64px;position:sticky;top:0;z-index:30;
+background:rgba(7,7,11,.88);backdrop-filter:blur(20px);
+border-bottom:1px solid var(--line);
+display:flex;align-items:center;justify-content:space-between;padding:0 15px
+}
+body.chat-open .top{display:none}
+.logo{
+font-size:27px;font-weight:950;letter-spacing:-1px;
+background:linear-gradient(90deg,var(--p),var(--pink));
+-webkit-background-clip:text;color:transparent
+}
+.topBtns{display:flex;gap:7px}
+.circle{
+width:40px;height:40px;border-radius:50%;background:var(--card2);
+display:grid;place-items:center;flex:none
+}
+.svg{width:20px;height:20px;display:block}
+.circle .svg{width:19px;height:19px}
+.notifBtn{position:relative}
+.notifBadge{position:absolute;top:-2px;right:-2px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#ff2d55;color:#fff;font-size:10px;font-weight:900;display:grid;place-items:center;border:2px solid var(--bg);line-height:1}
+.notifBadge:empty{display:none}
+.typingStatus{height:18px;padding:0 16px;color:var(--muted);font-size:12px;font-weight:700;opacity:.95}
+.profileAvatarStory{display:inline-grid;padding:4px;border-radius:50%}.profileAvatarStory.hasStory{background:linear-gradient(135deg,var(--p),var(--pink),#ffb300)}.profileAvatarStory .avatar.big{width:92px;height:92px;border:3px solid var(--bg)}
+.notificationList{display:flex;flex-direction:column;gap:8px}.notificationRow{width:100%;display:flex;align-items:center;gap:11px;padding:12px;border-radius:16px;background:var(--card2);text-align:left}.notificationRow:active{transform:scale(.99)}.notificationBody{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}.notificationBody b{font-size:14px}.notificationBody span{font-size:11px;color:var(--muted)}.notificationArrow{font-size:24px;color:var(--muted)}
+.screen{display:none;padding:13px}
+.screen.active{display:block;animation:screenIn .22s ease}
+@keyframes screenIn{
+from{opacity:0;transform:translateY(7px)}
+to{opacity:1;transform:none}
+}
+.title{font-size:27px;font-weight:900;margin:10px 3px 16px}
+.card{
+background:var(--card);border:1px solid var(--line);
+border-radius:21px;margin-bottom:13px;overflow:hidden
+}
+.row{display:flex;align-items:center;gap:10px}
+.avatar{
+width:43px;height:43px;border-radius:50%;overflow:hidden;
+display:grid;place-items:center;flex:none;
+background:linear-gradient(135deg,var(--p),var(--pink));font-weight:900
+}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar.sm{width:36px;height:36px}
+.avatar.big{width:92px;height:92px}
+.avatar.online{
+box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--green)
+}
+.createBar{display:flex;align-items:center;gap:9px;padding:12px}
+.fakeInput{
+flex:1;background:var(--card2);border-radius:18px;padding:12px;
+color:var(--muted);text-align:left
+}
+.stories{
+display:flex;gap:12px;overflow:auto;padding:4px 2px 16px;
+scrollbar-width:none
+}
+.stories::-webkit-scrollbar{display:none}
+.story{
+min-width:68px;width:68px;text-align:center;color:var(--muted);font-size:10px
+}
+.storyRing{
+width:64px;height:64px;border-radius:50%;padding:2px;margin:auto auto 5px;
+background:linear-gradient(135deg,#8b5cf6,#ec4899,#f59e0b)
+}
+.storyInner{
+width:100%;height:100%;border-radius:50%;background:var(--card2);
+overflow:hidden;display:grid;place-items:center;font-size:25px
+}
+.storyInner img,.storyInner video{
+width:100%;height:100%;object-fit:cover
+}
+.postHead{
+display:flex;align-items:center;gap:10px;padding:13px
+}
+.userInfo{flex:1;min-width:0}
+.name{font-weight:800;font-size:14px}
+.handle,.time{font-size:11px;color:var(--muted)}
+.postText{
+padding:0 14px 13px;line-height:1.5;font-size:15px;
+white-space:pre-wrap;overflow-wrap:anywhere
+}
+.media{
+width:100%;max-height:620px;object-fit:cover;
+background:#000;display:block
+}
+.actions{
+display:flex;gap:3px;padding:8px;
+border-top:1px solid var(--line);overflow:auto
+}
+.action{
+min-width:42px;padding:9px;border-radius:12px;
+color:var(--muted);display:flex;align-items:center;
+justify-content:center;gap:4px
+}
+.action svg{width:18px;height:18px}
+.action.active{
+color:#ff3d72;background:rgba(255,61,114,.1)
+}
+.meta{font-size:11px;color:var(--muted);padding:0 14px 12px}
+.commentPreview{padding:0 14px 14px;font-size:13px}
+.btn{
+background:linear-gradient(135deg,var(--p),var(--pink));
+color:#fff;border-radius:14px;padding:11px 16px;font-weight:800
+}
+.btn.secondary{background:var(--card2)}
+.btn.small{padding:8px 12px;font-size:12px}
+.full{width:100%}
+.search{margin-bottom:13px;position:relative}
+.search input{padding-left:42px}
+.searchIcon{
+position:absolute;left:14px;top:12px;color:var(--muted)
+}
+.people{
+display:flex;align-items:center;gap:10px;padding:13px;
+border-bottom:1px solid var(--line)
+}
+.people:last-child{border-bottom:0}
+.tabs{
+display:flex;background:var(--card2);padding:4px;
+border-radius:14px;margin-bottom:13px
+}
+.tab{
+flex:1;padding:10px;color:var(--muted);border-radius:11px
+}
+.tab.active{background:var(--card);color:#fff;font-weight:800}
+.profile{text-align:center;padding:18px}
+.profile .avatar{margin:auto}
+.profileName{font-size:24px;font-weight:900;margin-top:9px}
+.bio{color:var(--muted);font-size:13px;margin:6px auto 15px}
+.stats{display:flex;justify-content:center;gap:35px;margin:15px}
+.stat b{display:block;font-size:19px}
+.stat span{font-size:11px;color:var(--muted)}
+.option{
+display:flex;align-items:center;gap:12px;padding:14px;
+border-bottom:1px solid var(--line)
+}
+.option:last-child{border-bottom:0}
+.icon{width:28px;text-align:center}
+.icon svg{width:20px;height:20px}
+.optionMain{flex:1}
+.optionMain b{display:block;font-size:14px}
+.optionMain span{display:block;color:var(--muted);font-size:11px}
+.bottom{
+position:fixed;bottom:0;left:0;right:0;height:75px;z-index:50;
+background:rgba(12,12,17,.94);backdrop-filter:blur(20px);
+border-top:1px solid var(--line)
+}
+body.chat-open .bottom,
+body.chat-open .fab{display:none}
+.bottomIn{
+max-width:680px;margin:auto;height:100%;
+display:flex;justify-content:space-around
+}
+.nav{
+width:58px;height:58px;margin-top:7px;border-radius:17px;
+color:var(--muted);display:flex;flex-direction:column;
+align-items:center;justify-content:center
+}
+.nav span{font-size:9px}
+.nav.active{background:var(--card2);color:#fff}
+.fab{
+position:fixed;right:20px;bottom:90px;z-index:40;
+width:56px;height:56px;border-radius:50%;
+background:linear-gradient(135deg,var(--p),var(--pink));
+color:#fff;font-size:28px;box-shadow:0 10px 35px #8b5cf655
+}
+.modalBg{
+position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.72);
+backdrop-filter:blur(8px);display:none;align-items:flex-end
+}
+.modalBg.open{display:flex}
+.modal{
+width:min(680px,100%);max-height:92vh;overflow:auto;
+background:var(--card);border-radius:27px 27px 0 0;
+padding:17px;animation:modalUp .22s ease
+}
+@keyframes modalUp{
+from{transform:translateY(100%)}to{transform:none}
+}
+.modalHead{
+display:flex;justify-content:space-between;align-items:center;
+margin-bottom:15px
+}
+.modalTitle{font-size:19px;font-weight:900}
+.close{
+width:38px;height:38px;border-radius:50%;
+background:var(--card2);font-size:22px
+}
+.form{display:grid;gap:11px}
+.preview{
+width:100%;max-height:380px;object-fit:contain;border-radius:17px;
+display:none;background:#000
+}
+.reactions{display:flex;flex-wrap:wrap;gap:7px}
+.react{
+width:48px;height:48px;border-radius:14px;
+background:var(--card2);display:grid;place-items:center
+}
+.react svg{width:24px;height:24px}
+.react.active{
+background:rgba(139,92,246,.22);
+box-shadow:0 0 0 1px #8b5cf666
+}
+.comments{max-height:45vh;overflow:auto}
+.comment{
+display:flex;gap:9px;padding:11px 0;border-bottom:1px solid var(--line)
+}
+.commentBody{flex:1;font-size:13px}
+.commentTime{font-size:10px;color:var(--muted)}
+
+.chatListTitle{
+display:flex;justify-content:space-between;align-items:center
+}
+.chatRow{
+width:100%;display:flex;gap:10px;padding:14px;
+border-bottom:1px solid var(--line);text-align:left;transition:.18s
+}
+.chatRow:active{background:var(--card2)}
+.chatMain{flex:1;min-width:0}
+.chatMain b{font-size:14px}
+.chatMain div{
+font-size:12px;color:var(--muted);white-space:nowrap;
+overflow:hidden;text-overflow:ellipsis
+}
+
+/* =========================================================
+   FULLSCREEN MOBILE CHAT
+   ========================================================= */
+
+body.chat-open #messages{
+display:block;
+padding:0;
+margin:0;
+width:100%;
+height:100dvh;
+min-height:100dvh;
+animation:none;
+}
+
+.chat{
+position:fixed;
+inset:0;
+z-index:80;
+width:100%;
+height:100dvh;
+min-height:100dvh;
+display:flex;
+flex-direction:column;
+background:var(--bg);
+overflow:hidden;
+padding-bottom:env(safe-area-inset-bottom);
+}
+
+.chatHead{
+height:62px;
+min-height:62px;
+padding:7px 9px;
+border-bottom:1px solid var(--line);
+background:rgba(7,7,11,.94);
+backdrop-filter:blur(22px);
+display:flex;
+align-items:center;
+gap:4px;
+z-index:5;
+}
+
+.chatHead .circle{
+width:42px;
+height:42px;
+background:transparent
+}
+
+.chatHead .row[data-chat-profile]{
+height:48px;
+min-width:0;
+padding:2px 5px;
+border-radius:14px
+}
+
+.chatHead .row[data-chat-profile]:active{
+background:var(--card2)
+}
+
+.chatHead .row[data-chat-profile] .avatar{
+width:37px;
+height:37px
+}
+
+.chatHead .row[data-chat-profile]>div:last-child{
+min-width:0;
+overflow:hidden
+}
+
+.chatHead .row[data-chat-profile] b{
+display:block;
+font-size:14px;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis
+}
+
+.chatMessages{
+flex:1;
+min-height:0;
+overflow-y:auto;
+overflow-x:hidden;
+-webkit-overflow-scrolling:touch;
+overscroll-behavior:contain;
+padding:14px 13px 12px;
+scroll-behavior:smooth;
+background-size:cover;
+background-position:center;
+border-radius:0;
+}
+
+.chatMessages.theme-dark{
+background:linear-gradient(135deg,#090910,#141421)
+}
+.chatMessages.theme-purple{
+background:linear-gradient(135deg,#161023,#251338)
+}
+.chatMessages.theme-blue{
+background:linear-gradient(135deg,#07121c,#102637)
+}
+.chatMessages.theme-light{
+background:linear-gradient(135deg,#edf1f7,#dce2ec)
+}
+.chatMessages.hasBg{
+background-color:#08080c
+}
+
+/* message row */
+.bubbleWrap{
+position:relative;
+margin:3px 0;
+display:flex;
+flex-direction:column;
+transition:transform .18s ease;
+width:100%;
+touch-action:pan-y
+}
+.bubbleWrap.me{align-items:flex-end}
+.bubbleWrap.them{align-items:flex-start}
+
+/* TEXT BUBBLES ONLY */
+.bubble{
+position:relative;
+max-width:min(78%,330px);
+padding:8px 11px;
+border-radius:18px;
+font-size:14px;
+line-height:1.4;
+word-break:break-word;
+transition:transform .18s,opacity .18s;
+}
+
+.bubble.me{
+background:linear-gradient(135deg,var(--p),var(--pink));
+border-bottom-right-radius:5px
+}
+.bubble.them{
+background:var(--card2);
+border-bottom-left-radius:5px
+}
+.bubble.deleted{
+font-style:italic;
+opacity:.55
+}
+
+/* IMPORTANT:
+   PHOTO / VIDEO HAVE NO MESSAGE BUBBLE */
+.mediaMessage{
+position:relative;
+display:flex;
+flex-direction:column;
+align-items:flex-start;
+max-width:82%;
+padding:0;
+margin:0;
+background:transparent;
+border:0;
+box-shadow:none
+}
+.bubbleWrap.me .mediaMessage{
+align-items:flex-end
+}
+
+.chatMedia{
+display:block;
+width:auto;
+max-width:min(300px,78vw);
+max-height:min(430px,58vh);
+object-fit:cover;
+background:#000;
+border-radius:17px;
+padding:0;
+margin:0;
+box-shadow:0 2px 18px rgba(0,0,0,.18)
+}
+
+.chatMediaVideo{
+display:block;
+width:auto;
+max-width:min(300px,78vw);
+max-height:min(430px,58vh);
+object-fit:contain;
+background:#000;
+border-radius:17px;
+padding:0;
+margin:0
+}
+
+/* media timestamp stays outside media */
+.mediaTime{
+font-size:8px;
+color:#ffffff99;
+margin-top:4px;
+padding:0 4px;
+line-height:1
+}
+.bubbleWrap.them .mediaTime{
+color:#ffffff77
+}
+
+.msgTime{
+font-size:8px;
+opacity:.55;
+text-align:right;
+margin-top:3px
+}
+
+/* reaction no longer covers photo/video */
+.msgReaction{
+position:relative;
+bottom:auto;
+right:auto;
+align-self:flex-end;
+margin-top:3px;
+background:var(--card);
+border:1px solid var(--line);
+border-radius:10px;
+padding:3px 5px;
+display:flex;
+align-items:center;
+gap:2px;
+z-index:2;
+box-shadow:0 3px 12px #0005
+}
+.bubbleWrap.them .msgReaction{
+align-self:flex-start
+}
+.msgReaction svg{width:13px;height:13px}
+
+.replyQuote{
+font-size:10px;
+padding:5px 7px;
+border-left:2px solid #ffffff77;
+margin-bottom:5px;
+opacity:.72;
+background:#00000018;
+border-radius:5px;
+max-width:100%
+}
+
+/* voice stays compact */
+.voice{
+display:flex;
+align-items:center;
+gap:8px;
+min-width:190px
+}
+.voicePlay{
+width:36px;height:36px;border-radius:50%;
+background:#ffffff1d;display:grid;place-items:center
+}
+.voicePlay svg{width:16px;height:16px}
+.wave{
+display:flex;gap:2px;align-items:center;
+height:26px;flex:1
+}
+.wave i{
+display:block;width:3px;border-radius:3px;
+background:#fff;opacity:.7
+}
+.voiceLike{
+width:30px;height:30px;display:grid;place-items:center
+}
+.voiceLike svg{width:16px;height:16px}
+.voiceLike.active{color:#ff4778}
+.voiceTime{font-size:9px;opacity:.6}
+
+.chatInputArea{
+background:rgba(7,7,11,.96);
+backdrop-filter:blur(20px);
+border-top:1px solid var(--line);
+padding:7px 9px calc(8px + env(safe-area-inset-bottom));
+z-index:6;
+flex:none
+}
+
+.chatInput{
+display:flex;
+gap:6px;
+align-items:center;
+width:100%;
+padding:0
+}
+
+.chatInput input{
+flex:1;
+min-width:0;
+height:43px;
+padding:10px 13px;
+border-radius:21px;
+background:var(--card2);
+border:1px solid var(--line)
+}
+
+.iconBtn{
+width:42px;
+height:42px;
+border-radius:50%;
+background:var(--card2);
+display:grid;
+place-items:center;
+flex:none
+}
+.iconBtn:active{transform:scale(.94)}
+.iconBtn svg{width:19px;height:19px}
+
+.recording{
+background:#24131c!important;
+color:#ff5c83!important;
+animation:pulse 1s infinite
+}
+@keyframes pulse{
+50%{box-shadow:0 0 0 7px #ff416c18}
+}
+
+.replyBar{
+display:none;
+background:var(--card2);
+border-radius:13px;
+padding:8px 10px;
+margin:0 0 7px;
+align-items:center;
+gap:8px
+}
+.replyBar.open{
+display:flex;
+animation:replyIn .18s ease
+}
+@keyframes replyIn{
+from{opacity:0;transform:translateY(6px)}
+to{opacity:1;transform:none}
+}
+.replyBarText{
+flex:1;
+font-size:11px;
+color:var(--muted);
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis
+}
+.replyClose{font-size:18px;color:var(--muted)}
+
+.attachMenu{
+display:none;
+position:absolute;
+bottom:52px;
+left:0;
+background:var(--card);
+border:1px solid var(--line);
+border-radius:18px;
+padding:7px;
+z-index:20;
+box-shadow:0 15px 40px #0008
+}
+.attachMenu.open{display:grid}
+.attachItem{
+padding:11px 13px;
+border-radius:12px;
+display:flex;
+gap:8px;
+align-items:center;
+white-space:nowrap
+}
+.attachItem:active{background:var(--card2)}
+.chatInputWrap{position:relative;flex:none}
+
+.chatProfileHeader{
+padding:20px;text-align:center;background:var(--card);
+border-radius:20px;margin-bottom:12px
+}
+.chatProfileHeader .avatar{margin:auto}
+.profileGrid{
+display:grid;grid-template-columns:repeat(3,1fr);gap:2px
+}
+.profileGrid img,.profileGrid video{
+width:100%;aspect-ratio:1;object-fit:cover;background:#000
+}
+.empty{
+text-align:center;color:var(--muted);padding:50px 20px
+}
+.empty b{display:block;color:#fff;margin-bottom:5px}
+.toast{
+position:fixed;z-index:300;bottom:95px;left:50%;
+transform:translate(-50%,20px);opacity:0;background:#25252e;color:#fff;
+padding:12px 17px;border-radius:15px;transition:.25s;
+pointer-events:none;max-width:90%;text-align:center
+}
+.toast.show{
+opacity:1;transform:translate(-50%,0)
+}
+.viewer{
+position:fixed;inset:0;z-index:200;background:#000;
+display:none;color:#fff
+}
+.viewer.open{display:block}
+.viewerIn{
+height:100%;max-width:520px;margin:auto;
+position:relative;overflow:hidden
+}
+.viewerMedia{
+width:100%;height:100%;object-fit:contain;background:#000
+}
+.viewerText{
+width:100%;height:100%;display:grid;place-items:center;
+text-align:center;padding:40px;font-size:34px;font-weight:900;
+background:linear-gradient(135deg,#8b5cf6,#ec4899,#f59e0b)
+}
+.viewerTop{
+position:absolute;top:13px;left:12px;right:12px;z-index:8
+}
+.progress{
+height:3px;background:#ffffff55;border-radius:10px
+}
+.viewerClose{
+position:absolute;right:12px;top:18px;
+z-index:20;font-size:30px
+}
+.viewerNav{
+position:absolute;inset:0;display:flex;z-index:5
+}
+.viewerSide{flex:1}
+.viewerBottom{
+position:absolute;bottom:17px;left:12px;right:12px;
+z-index:10;display:flex;gap:6px
+}
+.viewerBottom input{
+background:#111c;border-color:#ffffff22;color:#fff
+}
+.viewerBtn{
+width:45px;height:45px;border-radius:50%;
+background:#ffffff22;color:#fff;display:grid;place-items:center
+}
+.viewerBtn svg{width:19px;height:19px}
+.storyReactRow{
+display:flex;gap:5px;overflow:auto;
+position:absolute;bottom:72px;left:12px;right:12px;z-index:10
+}
+.storyReactRow button{
+min-width:42px;height:42px;background:#ffffff1c;
+border-radius:13px;display:grid;place-items:center
+}
+.storyReactRow button.active{
+background:#ffffff35;
+box-shadow:0 0 0 1px #ffffff55
+}
+.storyReactRow svg{width:21px;height:21px}
+.storyReplies{
+position:absolute;left:12px;right:12px;bottom:125px;
+max-height:28vh;overflow:auto;z-index:9
+}
+.storyReply{
+background:#111d;padding:9px 11px;
+border-radius:14px;margin:5px 0;font-size:12px
+}
+.longPressShade{
+position:fixed;inset:0;z-index:500;
+background:rgba(0,0,0,.48);
+backdrop-filter:blur(13px);
+display:none;align-items:flex-end
+}
+.longPressShade.open{display:flex}
+.longMenu{
+width:min(680px,100%);
+background:rgba(25,25,34,.97);
+border-radius:28px 28px 0 0;
+padding:12px;animation:modalUp .18s ease
+}
+.longPreview{
+background:var(--card);border-radius:17px;
+padding:5px;margin-bottom:8px;
+max-height:180px;overflow:hidden
+}
+.longActions{display:grid;gap:4px}
+.longAction{
+padding:15px;border-radius:14px;text-align:left;
+background:transparent;display:flex;gap:12px;align-items:center
+}
+.longAction svg{width:20px;height:20px}
+.longAction:active{background:var(--card2)}
+.reactRow{
+display:flex;gap:4px;background:var(--card);
+border:1px solid var(--line);border-radius:20px;
+padding:7px;margin-bottom:8px;overflow:auto
+}
+.reactChoice{
+min-width:42px;height:42px;border-radius:14px;
+background:var(--card2);display:grid;place-items:center
+}
+.reactChoice svg{width:20px;height:20px}
+.auth{
+position:fixed;inset:0;z-index:1000;
+background:radial-gradient(circle at top right,#321657,#08080d 45%);
+display:none;overflow:auto
+}
+.authWrap{
+min-height:100%;width:min(440px,100%);margin:auto;
+padding:25px 20px;display:flex;flex-direction:column;
+justify-content:center
+}
+.authLogo{
+text-align:center;font-size:52px;font-weight:950;
+letter-spacing:-4px;
+background:linear-gradient(90deg,var(--p),var(--pink));
+-webkit-background-clip:text;color:transparent
+}
+.authSub{text-align:center;color:#9999aa;margin:5px 0 25px}
+.authCard{
+background:#12121bdd;border:1px solid #ffffff12;
+border-radius:28px;padding:18px
+}
+.authTabs{
+display:flex;background:#0d0d14;padding:4px;
+border-radius:15px;margin-bottom:18px
+}
+.authTab{
+flex:1;padding:11px;border-radius:11px;color:#999
+}
+.authTab.active{
+background:#20202b;color:#fff;font-weight:800
+}
+.authForm{display:grid;gap:11px}
+.authForm h2{font-size:22px}
+.authHelp{font-size:11px;color:#888;line-height:1.5}
+.authError{font-size:12px;color:#ff718f;min-height:17px}
+.onlineDot{
+width:8px;height:8px;border-radius:50%;
+background:var(--green);display:inline-block
+}
+
+/* NOVA verified badge */
+.verifiedBadge{
+display:inline-flex;width:17px;height:17px;margin-left:5px;
+vertical-align:-3px;align-items:center;justify-content:center;flex:none
+}
+.verifiedBadge svg{width:17px;height:17px;display:block}
+.verifiedBadge.sm{width:15px;height:15px;margin-left:4px;vertical-align:-2px}
+.verifiedBadge.sm svg{width:15px;height:15px}
+.verifiedName{display:inline-flex;align-items:center;min-width:0}
+.hidden{display:none!important}
+.smallText{font-size:11px;color:var(--muted)}
+@media(min-width:681px){
+body.chat-open #messages{
+max-width:680px;
+margin:auto
+}
+.chat{
+left:50%;
+right:auto;
+transform:translateX(-50%);
+width:min(680px,100vw)
+}
+}
+
+.storyMenuBtn{position:absolute;top:12px;right:55px;z-index:12}
+.modernDeleteIcon{width:20px;height:20px;display:block}
+.profileStoryRing{position:relative;display:inline-flex;padding:3px;border-radius:999px;background:conic-gradient(from 180deg,#ff2d55,#ff9f0a,#af52de,#ff2d55);cursor:pointer}
+.profileStoryRing .avatar{border:3px solid var(--bg)}
+.profileStoryRingBtn{border:0;background:none;padding:0;cursor:pointer}
+.stat.clickable{cursor:pointer}
 </style>
 </head>
+
 <body>
-<div id="root"></div>
+
+<div id="auth" class="auth">
+<div class="authWrap">
+<div class="authLogo">NOVA</div>
+<div class="authSub">Your social universe</div>
+<div class="authCard">
+<div class="authTabs">
+<button class="authTab active" data-auth="login">Log in</button>
+<button class="authTab" data-auth="register">Create account</button>
+</div>
+<div id="authBody"></div>
+</div>
+</div>
+</div>
+
+<div id="app" class="app">
+
+<header class="top">
+<button class="logo" data-go="home">NOVA</button>
+
+<div class="topBtns">
+<button class="circle" data-action="search" aria-label="Search">
+<svg class="svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>
+</svg>
+</button>
+
+<button class="circle notifBtn" data-action="notifications" aria-label="Notifications">
+<span id="notifBadge" class="notifBadge"></span>
+<svg class="svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+<path d="M10 21h4"/>
+</svg>
+</button>
+
+<button class="circle" data-go="messages" aria-label="Messages">
+<svg class="svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M20 11.5a7.5 7.5 0 0 1-8 7.5 8.5 8.5 0 0 1-4-.9L4 20l1.4-3.4A7.4 7.4 0 0 1 4.5 12 7.5 7.5 0 0 1 12 4.5a7.5 7.5 0 0 1 8 7Z"/>
+</svg>
+</button>
+</div>
+</header>
+
+<main>
+<section id="home" class="screen active"></section>
+<section id="explore" class="screen"></section>
+<section id="create" class="screen"></section>
+<section id="messages" class="screen"></section>
+<section id="profile" class="screen"></section>
+<section id="settings" class="screen"></section>
+</main>
+</div>
+
+<button class="fab" data-action="create">＋</button>
+
+<nav class="bottom">
+<div class="bottomIn">
+
+<button class="nav active" data-go="home">
+<svg class="svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1Z"/>
+</svg>
+<span>Home</span>
+</button>
+
+<button class="nav" data-go="explore">
+<svg class="svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>
+</svg>
+<span>Explore</span>
+</button>
+
+<button class="nav" data-go="create">
+<svg class="svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M12 5v14M5 12h14"/>
+</svg>
+<span>Create</span>
+</button>
+
+<button class="nav" data-go="messages">
+<svg class="svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M20 11.5a7.5 7.5 0 0 1-8 7.5 8.5 8.5 0 0 1-4-.9L4 20l1.4-3.4A7.4 7.4 0 0 1 4.5 12 7.5 7.5 0 0 1 12 4.5a7.5 7.5 0 0 1 8 7Z"/>
+</svg>
+<span>Messages</span>
+</button>
+
+<button class="nav" data-go="profile">
+<svg class="svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>
+</svg>
+<span>Profile</span>
+</button>
+
+</div>
+</nav>
+
+<div id="modalBg" class="modalBg">
+<div class="modal">
+<div class="modalHead">
+<div id="modalTitle" class="modalTitle"></div>
+<button class="close" data-action="closeModal">×</button>
+</div>
+<div id="modalBody"></div>
+</div>
+</div>
+
+<div id="longPressShade" class="longPressShade">
+<div class="longMenu" id="longMenu"></div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<div id="viewer" class="viewer">
+<div id="viewerIn" class="viewerIn"></div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL="https://lbsquyhrroayndxlsxwh.supabase.co";
-const SUPABASE_KEY="sb_publishable_WeZBHEpsMV3ms4Ls_J0xzA_OJKPW60Z";
+/* CARLOS CHAT — Supabase online backend */
+const NOVA_SUPABASE_URL="https://lbsquyhrroayndxlsxwh.supabase.co";
+const NOVA_SUPABASE_KEY="sb_publishable_WeZBHEpsMV3ms4Ls_J0xzA_OJKPW60Z";
+const NOVA_OWNER_CODE_HASH="a8266778483aaf6b5022e4a83dbd25d8c7bce152fb386fd6be6d4a5134b70567";
+const NOVA_STORAGE_BUCKET="carlos-media";
+
 const {createClient}=window.supabase;
-const sb=createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-const OWNER_ID="CARLOS-OWNER-7X9K2M4P";
-const state={session:null,profile:null,screen:"home",users:[],posts:[],notifications:[],saved:new Set(),openChat:null,chatUser:null,messages:[],typing:false,loading:false,postFile:null};
-const $=id=>document.getElementById(id);
-const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const fmt=t=>{const d=new Date(t);return d.toLocaleString("ka-GE",{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})};
-const initials=n=>String(n||"?").trim().split(/\s+/).map(x=>x[0]).join("").slice(0,2).toUpperCase();
-const icon=(name)=>({home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>',bell:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>',chat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11.5a8 8 0 0 1-8 8 9 9 0 0 1-4-.9L3 20l1.5-4A8 8 0 1 1 20 11.5z"/></svg>',user:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>',heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 8.7c0 5.5-8.8 10.2-8.8 10.2S3.2 14.2 3.2 8.7A4.7 4.7 0 0 1 12 6a4.7 4.7 0 0 1 8.8 2.7z"/></svg>',bookmark:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18l-6-4-6 4z"/></svg>',send:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4zM22 2 11 13"/></svg>',back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>'}[name]||"");
-function avatar(p,big=false){return `<div class="avatar ${big?'big':''}">${p?.avatar_url?`<img src="${esc(p.avatar_url)}" style="width:100%;height:100%;border-radius:50%;object-fit:cover">`:initials(p?.name||p?.username)}</div>`}
-function verified(p){return p?.verified?'<span class="badge">✓</span>':''}
-function navButton(screen,label,ic){return `<button class="${state.screen===screen?'active':''}" onclick="go('${screen}')">${icon(ic)}<span>${label}</span></button>`}
-async function getProfile(id=state.session?.user?.id){if(!id)return null;let {data}=await sb.from("profiles").select("*").eq("id",id).maybeSingle();return data}
-async function ensureProfile(){if(!state.session)return;state.profile=await getProfile();if(!state.profile){const u=state.session.user;const base=(u.user_metadata?.username||u.email?.split("@")[0]||"user").replace(/[^a-zA-Z0-9_]/g,"").slice(0,24)||"user";let username=base;let i=1;while((await sb.from("profiles").select("id").eq("username",username).maybeSingle()).data){username=base+i++}const {data,error}=await sb.from("profiles").insert({id:u.id,username,name:u.user_metadata?.name||username,bio:"",verified:false}).select().single();if(error){toast(error.message);return}state.profile=data}}
-async function loadUsers(){const {data,error}=await sb.from("profiles").select("*").order("created_at",{ascending:false}).limit(100);if(!error)state.users=data||[]}
-async function loadPosts(){const {data,error}=await sb.from("posts").select("*, profiles(*)").order("created_at",{ascending:false}).limit(50);if(!error)state.posts=data||[]}
-async function loadNotifications(){const {data}=await sb.from("notifications").select("*").eq("user_id",state.session.user.id).order("created_at",{ascending:false}).limit(50);state.notifications=data||[]}
-async function loadSaved(){const {data}=await sb.from("saved_posts").select("post_id").eq("user_id",state.session.user.id);state.saved=new Set((data||[]).map(x=>x.post_id))}
-async function boot(){const {data}=await sb.auth.getSession();state.session=data.session;if(state.session){await ensureProfile();await Promise.all([loadUsers(),loadPosts(),loadNotifications(),loadSaved()]);subscribe();render()}else renderAuth()}
-sb.auth.onAuthStateChange(async(_,session)=>{state.session=session;if(session){setTimeout(async()=>{await ensureProfile();await Promise.all([loadUsers(),loadPosts(),loadNotifications(),loadSaved()]);subscribe();render()},0)}else{state.profile=null;renderAuth()}});
-let channels=[];
-function subscribe(){channels.forEach(c=>sb.removeChannel(c));channels=[];
-const tables=["posts","post_reactions","comments","saved_posts","notifications","messages","message_reactions","story_reactions","reposts","comment_reactions"];
-tables.forEach(table=>{const c=sb.channel("carlos-"+table).on("postgres_changes",{event:"*",schema:"public",table},async payload=>{if(table==="posts"||table==="post_reactions"||table==="comments"){await loadPosts()}if(table==="notifications")await loadNotifications();if(table==="saved_posts")await loadSaved();if(table==="messages"&&state.openChat){await loadChatMessages(state.openChat);refreshChatOnly();}if(table!=="messages")render();}).subscribe();channels.push(c)});
+const novaSupabase=createClient(NOVA_SUPABASE_URL,NOVA_SUPABASE_KEY,{
+  auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}
+});
+
+const novaUser=()=>{
+  const u=novaSupabase.auth.getUser ? null : null;
+  const session=novaSupabase.auth.getSession ? null : null;
+  return window.NOVA_BACKEND?.auth?.currentUser||null;
+};
+
+const novaSnap=(row,ref)=>{
+  const data=row?.data && typeof row.data==="object"?{...row.data}:{};
+  return {
+    id:String(row?.id||""),
+    exists:true,
+    ref,
+    data:()=>({...data}),
+  };
+};
+
+class NovaDocRef{
+  constructor(collection,id){this.collection=collection;this.id=String(id);this.path=`${collection}/${this.id}`;}
+  async get(){
+    const {data,error}=await novaSupabase.from("nova_store").select("*").eq("collection",this.collection).eq("id",this.id).maybeSingle();
+    if(error)throw error;
+    if(!data)return {id:this.id,exists:false,ref:this,data:()=>undefined};
+    return novaSnap(data,this);
+  }
+  async set(value,options={}){
+    const cleanValue={...(value||{})};
+    if(options.merge){
+      const old=await this.get();
+      const merged={...(old.exists?old.data():{}),...cleanValue};
+      return this._write(merged);
+    }
+    return this._write(cleanValue);
+  }
+  async update(value){
+    const old=await this.get();
+    if(!old.exists)throw new Error("Document not found");
+    return this._write({...old.data(),...(value||{})});
+  }
+  async delete(){
+    const {error}=await novaSupabase.from("nova_store").delete().eq("collection",this.collection).eq("id",this.id);
+    if(error)throw error;
+  }
+  async _write(value){
+    const row={collection:this.collection,id:this.id,data:value,updated_at:new Date().toISOString()};
+    const {error}=await novaSupabase.from("nova_store").upsert(row,{onConflict:"collection,id"});
+    if(error)throw error;
+  }
 }
-function renderAuth(){ $("root").innerHTML=`<main class="auth"><section class="auth-box"><div class="brand">CARLOS</div><h1>შედი ან დარეგისტრირდი</h1><p>რეალური ონლაინ სოციალური ჩატი — Supabase-ზე.</p><div class="tabs"><button id="loginTab" class="active" onclick="authMode('login')">შესვლა</button><button id="regTab" onclick="authMode('register')">რეგისტრაცია</button></div><div id="authForm"></div></section></main>`;authMode("login")}
-function authMode(mode){$("loginTab").classList.toggle("active",mode==="login");$("regTab").classList.toggle("active",mode==="register");$("authForm").innerHTML=mode==="login"?`<div class="field"><input id="email" type="email" placeholder="Email"></div><div class="field"><input id="password" type="password" placeholder="Password"></div><button class="primary" style="width:100%" onclick="login()">შესვლა</button>`:`<div class="field"><input id="name" placeholder="სახელი"></div><div class="field"><input id="username" placeholder="Username"></div><div class="field"><input id="email" type="email" placeholder="Email"></div><div class="field"><input id="password" type="password" placeholder="Password"></div><button class="primary" style="width:100%" onclick="register()">ანგარიშის შექმნა</button>`}
-async function login(){const {error}=await sb.auth.signInWithPassword({email:$("email").value,password:$("password").value});if(error)toast(error.message)}
-async function register(){const email=$("email").value,password=$("password").value,name=$("name").value.trim(),username=$("username").value.trim();if(!name||!username||!email||password.length<6)return toast("შეავსე ყველა ველი; პაროლი მინიმუმ 6 სიმბოლო.");const {data,error}=await sb.auth.signUp({email,password,options:{data:{name,username}}});if(error)return toast(error.message);if(!data.session)toast("შეამოწმე Email და დაადასტურე ანგარიში.")}
-async function logout(){await sb.auth.signOut()}
-function go(s){state.screen=s;render()}
-function render(){if(!state.session)return renderAuth();const unread=state.notifications.filter(n=>!n.read).length;$("root").innerHTML=`<div class="app"><header class="top"><div class="brand">CARLOS</div><div class="top-actions"><button class="iconbtn" onclick="go('search')">${icon('search')}</button><button class="iconbtn" onclick="go('notifications')">${icon('bell')} ${unread?`<sup style="color:#f472b6">${unread}</sup>`:""}</button><button class="iconbtn" onclick="openMessages()">${icon('chat')}</button></div></header><div class="layout"><aside class="side left"><nav class="nav">${navButton("home","მთავარი","home")}${navButton("search","ძიება","search")}${navButton("notifications","ნოტიფიკაციები","bell")}${navButton("profile","პროფილი","user")}</nav><div class="profile-mini">${avatar(state.profile)}<div><div class="mini-name">${esc(state.profile?.name)}${verified(state.profile)}</div><div class="muted">@${esc(state.profile?.username)}</div></div></div><button class="secondary" style="width:100%;margin-top:10px" onclick="logout()">გასვლა</button></aside><main class="screen">${screenHTML()}</main><aside class="side right"><div class="card right-card"><div class="section-title">მომხმარებლები</div><div class="people">${state.users.filter(u=>u.id!==state.session.user.id).slice(0,8).map(userCard).join("")||'<div class="muted">ჯერ არავინ არის.</div>'}</div></div></aside></div><nav class="bottom">${navButton("home","Home","home")}${navButton("search","Search","search")}<button onclick="createPost()">＋<span>Create</span></button><button onclick="openMessages()">${icon("chat")}<span>Messages</span></button>${navButton("profile","Profile","user")}</nav></div>${state.openChat?chatHTML():""}`}
-function screenHTML(){if(state.screen==="search")return `<div class="section-title">მომხმარებლების ძიება</div><div class="search"><span>${icon("search")}</span><input placeholder="მოძებნე username ან სახელი..." oninput="filterPeople(this.value)"></div><div id="peopleList" class="people" style="margin-top:14px">${state.users.map(userCard).join("")}</div>`;if(state.screen==="notifications")return `<div class="section-title">ნოტიფიკაციები</div><div class="card card-pad">${state.notifications.map(n=>`<div class="row" style="padding:10px 0;border-bottom:1px solid var(--line);opacity:${n.read?.5:1}"><div style="flex:1">${esc(n.text||n.type)}</div><small class="muted">${fmt(n.created_at)}</small></div>`).join("")||'<div class="muted">ნოტიფიკაცია არ არის.</div>'}</div>`;if(state.screen==="profile")return `<div class="card card-pad" style="text-align:center">${avatar(state.profile,true)}<h2>${esc(state.profile.name)}${verified(state.profile)}</h2><div class="muted">@${esc(state.profile.username)}</div><p>${esc(state.profile.bio||"")}</p><button class="secondary" onclick="editProfile()">პროფილის რედაქტირება</button></div>`;return `<div class="card card-pad"><div class="composer">${avatar(state.profile)}<textarea id="postText" placeholder="რა ხდება?"></textarea><label class="secondary" title="მედია">＋<input id="postMedia" type="file" accept="image/*,video/*" hidden onchange="setPostMedia(this.files[0])"></label><button class="primary" onclick="createPost()">Post</button></div></div><div class="card card-pad"><div class="row between"><div class="section-title">Stories</div><label class="secondary">＋ Story<input type="file" accept="image/*,video/*" hidden onchange="createStory(this.files[0])"></label></div><div class="stories">${state.users.slice(0,10).map(p=>`<div class="story"><div class="story-ring">${avatar(p)}</div><span>${esc(p.name||p.username)}</span></div>`).join("")}</div></div>${state.posts.map(postHTML).join("")||'<div class="muted" style="text-align:center;padding:30px">პირველი პოსტი შენ დადე ✨</div>'}`}
-function userCard(p){return `<div class="person">${avatar(p)}<div class="person-info"><div class="post-name">${esc(p.name||p.username)}${verified(p)}</div><div class="muted">@${esc(p.username)}</div></div>${p.id!==state.session.user.id?`<button class="primary" onclick="openChatWith('${p.id}')">მიწერა</button>`:""}</div>`}
-async function uploadMedia(file,folder="media"){if(!file)throw new Error("ფაილი არ არის არჩეული");const ext=(file.name.split(".").pop()||"bin").replace(/[^a-z0-9]/gi,"").toLowerCase()||"bin";const path=`${state.session.user.id}/${folder}/${Date.now()}-${crypto.randomUUID()}.${ext}`;const {error}=await sb.storage.from("carlos-media").upload(path,file,{upsert:false,contentType:file.type||"application/octet-stream"});if(error)throw error;const {data}=sb.storage.from("carlos-media").getPublicUrl(path);if(!data?.publicUrl)throw new Error("მედიის URL ვერ შეიქმნა");return data.publicUrl}
-async function setPostMedia(file){state.postFile=file||null;toast(file?`არჩეულია: ${file.name}`:"მედია მოიხსნა")}
-async function createPost(){const text=$("postText")?.value?.trim();if(!text&&!state.postFile)return toast("დაწერე რამე ან აირჩიე მედია.");try{let media_url=null,media_type=null;if(state.postFile){toast("მედია იტვირთება…");media_url=await uploadMedia(state.postFile,"posts");media_type=state.postFile.type}const {error}=await sb.from("posts").insert({user_id:state.session.user.id,text:text||"",media_url,media_type});if(error)throw error;state.postFile=null;if($("postText"))$("postText").value="";await loadPosts();render();toast("პოსტი გამოქვეყნდა ✓")}catch(e){toast(e.message||"პოსტის შექმნა ვერ მოხერხდა")}}
-async function createStory(file){if(!file)return;try{const url=await uploadMedia(file,"stories");const {error}=await sb.from("stories").insert({user_id:state.session.user.id,media_url:url,media_type:file.type||"image"});if(error)throw error;toast("Story გამოქვეყნდა ✓")}catch(e){toast(e.message||"Story ვერ აიტვირთა")}}
-function postHTML(p){const profile=p.profiles||state.users.find(u=>u.id===p.user_id)||{};return `<article class="card" data-post="${p.id}"><div class="card-pad"><div class="post-head">${avatar(profile)}<div style="flex:1"><div class="post-name">${esc(profile.name||profile.username)}${verified(profile)}</div><div class="muted">@${esc(profile.username||"user")} · ${fmt(p.created_at)}</div></div></div><div class="post-text" style="margin-top:12px">${esc(p.text)}</div></div>${p.media_url?(p.media_type?.startsWith("video")?`<video class="post-media" controls src="${esc(p.media_url)}"></video>`:`<img class="post-media" src="${esc(p.media_url)}">`):""}<div class="card-pad"><div class="actions"><button class="act" onclick="reactPost('${p.id}','❤️')">${icon("heart")} <span>Like</span></button><button class="act" onclick="reactPost('${p.id}','🔥')">🔥</button><button class="act" onclick="commentPost('${p.id}')">💬</button><button class="act ${state.saved.has(p.id)?"saved":""}" onclick="toggleSave('${p.id}')">${icon("bookmark")}</button></div></div></article>`}
-async function reactPost(post_id,reaction){const {error}=await sb.from("post_reactions").upsert({post_id,user_id:state.session.user.id,reaction},{onConflict:"post_id,user_id"});if(error)return toast(error.message);await notifyPostOwner(post_id,"post reaction",`@${state.profile.username}-მ პოსტზე რეაქცია დატოვა ${reaction}`);toast("რეაქცია დაემატა")}
-async function toggleSave(post_id){if(state.saved.has(post_id)){const {error}=await sb.from("saved_posts").delete().eq("post_id",post_id).eq("user_id",state.session.user.id);if(error)return toast(error.message)}else{const {error}=await sb.from("saved_posts").insert({post_id,user_id:state.session.user.id});if(error)return toast(error.message)}await loadSaved();render()}
-async function commentPost(post_id){const text=prompt("კომენტარი:");if(!text)return;const {error}=await sb.from("comments").insert({post_id,user_id:state.session.user.id,text});if(error)return toast(error.message);await notifyPostOwner(post_id,"comment",`@${state.profile.username}-მ კომენტარი დატოვა`);toast("კომენტარი დაემატა")}
-async function notifyPostOwner(post_id,type,text){const p=state.posts.find(x=>x.id===post_id);if(!p||p.user_id===state.session.user.id)return;await sb.from("notifications").insert({user_id:p.user_id,from_user_id:state.session.user.id,type,reference_id:post_id,text})}
-function filterPeople(q){q=q.toLowerCase();$("peopleList").innerHTML=state.users.filter(p=>(p.name+" "+p.username).toLowerCase().includes(q)).map(userCard).join("")}
-async function editProfile(){const name=prompt("სახელი:",state.profile.name);if(name===null)return;const bio=prompt("Bio:",state.profile.bio||"");if(bio===null)return;const {error}=await sb.from("profiles").update({name,bio}).eq("id",state.session.user.id);if(error)return toast(error.message);await ensureProfile();render()}
-async function openMessages(){go("home");const other=state.users.find(u=>u.id!==state.session.user.id);if(other)openChatWith(other.id);else toast("ჯერ სხვა მომხმარებელი არ დარეგისტრირებულა.")}
-async function openChatWith(userId){const u=state.users.find(x=>x.id===userId);if(!u)return;state.chatUser=u;state.openChat=await findOrCreateChat(u.id);await loadChatMessages(state.openChat);subscribeChatChannel();render()}
-async function findOrCreateChat(otherId){const me=state.session.user.id;const {data:mine}=await sb.from("chat_members").select("chat_id").eq("user_id",me);for(const row of mine||[]){const {data:both}=await sb.from("chat_members").select("user_id").eq("chat_id",row.chat_id);if((both||[]).some(x=>x.user_id===otherId))return row.chat_id}const {data:chat,error}=await sb.from("chats").insert({}).select().single();if(error){toast(error.message);return null}await sb.from("chat_members").insert({chat_id:chat.id,user_id:me});const add=await sb.from("chat_members").insert({chat_id:chat.id,user_id:otherId});if(add.error){toast(add.error.message);return null}return chat.id}
-async function loadChatMessages(chatId){if(!chatId)return;const {data,error}=await sb.from("messages").select("*").eq("chat_id",chatId).order("created_at",{ascending:true}).limit(300);if(error)return toast(error.message);state.messages=data||[]}
-function chatHTML(){const u=state.chatUser;return `<section class="chat-overlay"><header class="chat-top"><button class="iconbtn" onclick="closeChat()">${icon("back")}</button>${avatar(u)}<div class="chat-title"><b>${esc(u?.name||u?.username)}${verified(u)}</b><span id="chatOnline">online</span></div><button class="iconbtn" onclick="toast('Chat settings')">⋯</button></header><div class="chat-messages" id="chatMessages">${state.messages.map(messageHTML).join("")}</div><div class="typing" id="typingText">${state.typing?esc(u?.name)+" წერს...":""}</div><footer class="chat-compose"><button class="iconbtn" style="flex:none" onclick="toggleVoice()" title="Voice">🎙️</button><label class="iconbtn" style="flex:none">＋<input id="mediaInput" type="file" accept="image/*,video/*" hidden onchange="sendMedia(this.files[0])"></label><textarea id="messageInput" placeholder="მესიჯი..." oninput="typingNow()" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage()}"></textarea><button class="primary" onclick="sendMessage()">${icon("send")}</button></footer></section>`}
-function messageHTML(m){const mine=m.sender_id===state.session.user.id;return `<div class="bubble ${mine?"mine":""}">${m.media_url?(m.media_type?.startsWith("video")?`<video controls src="${esc(m.media_url)}"></video>`:(m.media_type?.startsWith("audio")?`<audio controls src="${esc(m.media_url)}" style="width:220px"></audio>`:`<img src="${esc(m.media_url)}">`)):""}${m.text?`<div>${esc(m.text)}</div>`:""}<small>${fmt(m.created_at)} ${m.read_at?"✓✓":""}</small></div>`}
-let typingTimer=null,chatChannel=null;
-function setTyping(active){if(!state.openChat||!state.session)return;const ch=chatChannel||sb.channel("chat-"+state.openChat);chatChannel=ch;ch.send({type:"broadcast",event:"typing",payload:{user_id:state.session.user.id,active:!!active}}).catch(()=>{})}
-function typingNow(){state.typing=true;refreshChatTyping();setTyping(true);clearTimeout(typingTimer);typingTimer=setTimeout(()=>{state.typing=false;setTyping(false);refreshChatTyping()},1100)}
-function refreshChatTyping(){const t=$("typingText");if(t)t.textContent=state.typing?`${state.chatUser?.name||"მომხმარებელი"} წერს...`:""}
-function refreshChatOnly(){const box=$("chatMessages");if(box){box.innerHTML=state.messages.map(messageHTML).join("");box.scrollTop=box.scrollHeight}}
-function subscribeChatChannel(){if(chatChannel)sb.removeChannel(chatChannel);if(!state.openChat)return;chatChannel=sb.channel("chat-"+state.openChat).on("broadcast",{event:"typing"},({payload})=>{if(payload?.user_id!==state.session.user.id){state.typing=!!payload?.active;refreshChatTyping();clearTimeout(typingTimer);if(state.typing)typingTimer=setTimeout(()=>{state.typing=false;refreshChatTyping()},1800)}}).subscribe()}
-async function sendMessage(){const input=$("messageInput"),text=input?.value?.trim();if(!text||!state.openChat)return;input.value="";state.typing=false;setTyping(false);const optimistic={id:"local-"+crypto.randomUUID(),chat_id:state.openChat,sender_id:state.session.user.id,text,created_at:new Date().toISOString(),read_at:null};state.messages.push(optimistic);refreshChatOnly();const {data,error}=await sb.from("messages").insert({chat_id:state.openChat,sender_id:state.session.user.id,text}).select().single();if(error){state.messages=state.messages.filter(x=>x.id!==optimistic.id);refreshChatOnly();return toast(error.message)}state.messages=state.messages.map(x=>x.id===optimistic.id?data:x);refreshChatOnly()}
-async function sendMedia(file){if(!file||!state.openChat)return;try{toast("იტვირთება…");const url=await uploadMedia(file,"chat");const type=file.type||"application/octet-stream";const optimistic={id:"local-"+crypto.randomUUID(),chat_id:state.openChat,sender_id:state.session.user.id,text:"",media_url:url,media_type:type,created_at:new Date().toISOString(),read_at:null};state.messages.push(optimistic);refreshChatOnly();const {data,error}=await sb.from("messages").insert({chat_id:state.openChat,sender_id:state.session.user.id,text:"",media_url:url,media_type:type}).select().single();if(error){state.messages=state.messages.filter(x=>x.id!==optimistic.id);refreshChatOnly();throw error}state.messages=state.messages.map(x=>x.id===optimistic.id?data:x);refreshChatOnly();toast("გაგზავნილია ✓")}catch(e){toast(e.message||"მედიის ატვირთვა ვერ მოხერხდა")}}
-let mediaRecorder=null,voiceChunks=[];
-async function toggleVoice(){if(mediaRecorder&&mediaRecorder.state==="recording"){mediaRecorder.stop();return}try{const stream=await navigator.mediaDevices.getUserMedia({audio:true});mediaRecorder=new MediaRecorder(stream);voiceChunks=[];mediaRecorder.ondataavailable=e=>{if(e.data.size)voiceChunks.push(e.data)};mediaRecorder.onstop=async()=>{stream.getTracks().forEach(t=>t.stop());const blob=new Blob(voiceChunks,{type:mediaRecorder.mimeType||"audio/webm"});try{const file=new File([blob],`voice-${Date.now()}.webm`,{type:blob.type});await sendMedia(file)}catch(e){toast(e.message||"Voice ვერ გაიგზავნა")}mediaRecorder=null};mediaRecorder.start();toast("🎙️ ჩაწერა დაიწყო — ისევ დააჭირე გასაჩერებლად")}catch(e){toast("მიკროფონზე წვდომა ვერ მივიღე")}}
-function closeChat(){if(chatChannel){sb.removeChannel(chatChannel);chatChannel=null}state.openChat=null;state.chatUser=null;state.messages=[];state.typing=false;render()}
-boot();
+
+class NovaQuery{
+  constructor(collection,filters=[]){this.collection=collection;this.filters=filters;}
+  doc(id){return new NovaDocRef(this.collection,id);}
+  where(field,op,value){return new NovaQuery(this.collection,[...this.filters,{field,op,value}]);}
+  _matches(data){
+    return this.filters.every(f=>{
+      const v=data?.[f.field];
+      if(f.op==="array-contains")return Array.isArray(v)&&v.includes(f.value);
+      if(f.op==="==")return v===f.value;
+      if(f.op==="!=")return v!==f.value;
+      return true;
+    });
+  }
+  async get(){
+    const {data,error}=await novaSupabase.from("nova_store").select("*").eq("collection",this.collection);
+    if(error)throw error;
+    const rows=(data||[]).filter(r=>this._matches(r.data||{}));
+    const docs=rows.map(r=>novaSnap(r,new NovaDocRef(this.collection,r.id)));
+    return {docs,empty:docs.length===0,size:docs.length};
+  }
+  onSnapshot(next,errorCb){
+    let stopped=false;
+    const refresh=async()=>{
+      if(stopped)return;
+      try{next(await this.get())}catch(e){if(errorCb)errorCb(e)}
+    };
+    refresh();
+    const channel=novaSupabase.channel(`nova-${this.collection}-${Math.random().toString(36).slice(2)}`)
+      .on("postgres_changes",{event:"*",schema:"public",table:"nova_store",filter:`collection=eq.${this.collection}`},()=>refresh())
+      .subscribe();
+    return ()=>{stopped=true;novaSupabase.removeChannel(channel)};
+  }
+}
+
+class NovaBatch{
+  constructor(){this.ops=[];}
+  set(ref,value,options={}){this.ops.push(()=>ref.set(value,options));return this;}
+  update(ref,value){this.ops.push(()=>ref.update(value));return this;}
+  delete(ref){this.ops.push(()=>ref.delete());return this;}
+  async commit(){for(const op of this.ops)await op();}
+}
+
+const NOVA_FIELD_VALUE={
+  arrayUnion(...items){return {__novaArrayUnion:true,items};}
+};
+
+const novaResolveSpecial=(old,value)=>{
+  const out={...(value||{})};
+  for(const [k,v] of Object.entries(out)){
+    if(v&&v.__novaArrayUnion){
+      const arr=Array.isArray(old?.[k])?old[k]:[];
+      out[k]=[...new Map([...arr,...v.items].map(x=>[JSON.stringify(x),x])).values()];
+    }
+  }
+  return out;
+};
+
+NovaDocRef.prototype._write=async function(value){
+  const old=await this.get();
+  const resolved=novaResolveSpecial(old.exists?old.data():{},value);
+  const row={collection:this.collection,id:this.id,data:resolved,updated_at:new Date().toISOString()};
+  const {error}=await novaSupabase.from("nova_store").upsert(row,{onConflict:"collection,id"});
+  if(error)throw error;
+};
+
+const novaAuth={
+  currentUser:null,
+  async _sync(){
+    const {data}=await novaSupabase.auth.getSession();
+    const s=data?.session;
+    this.currentUser=s?.user?{
+      uid:s.user.id,email:s.user.email||"",
+      displayName:s.user.user_metadata?.name||s.user.user_metadata?.username||"",
+      async updateProfile(v){await novaSupabase.auth.updateUser({data:{name:v?.displayName||""}});}
+    }:null;
+    return this.currentUser;
+  },
+  onAuthStateChanged(callback){
+    let active=true;
+    this._sync().then(u=>{if(active)callback(u)});
+    const {data}=novaSupabase.auth.onAuthStateChange((_event,session)=>{
+      this.currentUser=session?.user?{
+        uid:session.user.id,email:session.user.email||"",
+        displayName:session.user.user_metadata?.name||session.user.user_metadata?.username||"",
+        async updateProfile(v){await novaSupabase.auth.updateUser({data:{name:v?.displayName||""}});}
+      }:null;
+      if(active)callback(this.currentUser);
+    });
+    return ()=>{active=false;data?.subscription?.unsubscribe()};
+  },
+  async createUserWithEmailAndPassword(email,password){
+    const {data,error}=await novaSupabase.auth.signUp({email,password});
+    if(error)throw Object.assign(new Error(error.message),{code:error.code||"auth/signup-failed"});
+    await this._sync();
+    return {user:this.currentUser};
+  },
+  async signInWithEmailAndPassword(email,password){
+    const {data,error}=await novaSupabase.auth.signInWithPassword({email,password});
+    if(error)throw Object.assign(new Error(error.message),{code:error.code||"auth/invalid-credential"});
+    await this._sync();
+    return {user:this.currentUser};
+  },
+  async signOut(){const {error}=await novaSupabase.auth.signOut();if(error)throw error;this.currentUser=null;}
+};
+
+const novaDb={
+  collection(name){return new NovaQuery(name);},
+  batch(){return new NovaBatch();},
+  async runTransaction(callback){
+    const writes=[];
+    const tx={
+      async get(ref){return ref.get();},
+      set(ref,value,options={}){writes.push(()=>ref.set(value,options));},
+      update(ref,value){writes.push(()=>ref.update(value));},
+      delete(ref){writes.push(()=>ref.delete());}
+    };
+    const result=await callback(tx);
+    for(const w of writes)await w();
+    return result;
+  }
+};
+
+window.NOVA_BACKEND={auth:novaAuth,db:novaDb,analytics:null,fieldValue:NOVA_FIELD_VALUE};
+window.NOVA_OWNER_UID="";
+window.NOVA_ONLINE_READY=false;
+window.NOVA_ONLINE_ERROR="";
+
+window.NOVA_UPLOAD_TO_STORAGE=async function(file,options={}){
+  if(!file)throw new Error("No file selected");
+  const ext=(file.name.split(".").pop()||"bin").replace(/[^a-z0-9]/gi,"").toLowerCase()||"bin";
+  const folder=String(options.folder||"media").replace(/[^a-zA-Z0-9_\/-]/g,"_").replace(/^\/+|\/+$/g,"");
+  const path=`${novaAuth.currentUser?.uid||"anonymous"}/${folder}/${Date.now()}-${crypto.randomUUID()}.${ext}`;
+  const {error}=await novaSupabase.storage.from(NOVA_STORAGE_BUCKET).upload(path,file,{
+    upsert:false,contentType:file.type||"application/octet-stream"
+  });
+  if(error)throw error;
+  const {data}=novaSupabase.storage.from(NOVA_STORAGE_BUCKET).getPublicUrl(path);
+  if(!data?.publicUrl)throw new Error("Media URL unavailable");
+  return {secure_url:data.publicUrl,url:data.publicUrl,public_id:path};
+};
+</script>
+const $=id=>document.getElementById(id);
+
+/* NOVA Owner */
+
+/* Owner activation code is never shown in the UI. Keep this code private. */
+const NOVA_OWNER_CODE_HASH="5abb03d712aaad79c54561d73d0c013f3d55a287ae6a61e0f4ad4a974744e263";
+
+const NOVA={
+state:{
+screen:"home",
+storyUser:null,
+storyIndex:0,
+profileTab:"posts",
+search:"",
+activeChat:null,
+chatProfile:null,
+replyTo:null,
+chatTheme:{},
+pressTimer:null,
+storyTimer:null,
+storyPausedByLongPress:false
+},
+
+uid(p="id"){
+return p+"_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,9)
+},
+
+esc(v){
+return String(v??"")
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+},
+
+time(t){
+let n=Date.now()-Number(t);
+if(n<60000)return"now";
+if(n<3600000)return Math.floor(n/60000)+"m";
+if(n<86400000)return Math.floor(n/3600000)+"h";
+if(n<604800000)return Math.floor(n/86400000)+"d";
+return new Date(Number(t)).toLocaleDateString()
+},
+
+get(k,d){
+try{
+let x=localStorage.getItem("NOVA_"+k);
+return x?JSON.parse(x):d
+}catch(e){return d}
+},
+
+set(k,v){
+try{localStorage.setItem("NOVA_"+k,JSON.stringify(v))}
+catch(e){}
+},
+
+toast(t){
+let x=$("toast");
+if(!x)return;
+x.textContent=t;
+x.classList.add("show");
+clearTimeout(this.toastT);
+this.toastT=setTimeout(()=>x.classList.remove("show"),2200)
+},
+
+modal(t,h){
+$("modalTitle").textContent=t;
+$("modalBody").innerHTML=h;
+$("modalBg").classList.add("open")
+},
+
+closeModal(){
+$("modalBg").classList.remove("open")
+},
+
+go(s){
+this.state.screen=s;
+
+if(s!=="messages"||!this.state.activeChat){
+document.body.classList.remove("chat-open")
+}
+
+document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
+$(s).classList.add("active");
+
+document.querySelectorAll(".nav").forEach(x=>
+x.classList.toggle("active",x.dataset.go===s)
+);
+
+this.render(s);
+window.scrollTo(0,0)
+},
+
+render(s){
+if(modules[s]?.render)modules[s].render()
+},
+
+async image(file){
+return new Promise(resolve=>{
+if(!file)return resolve("");
+let r=new FileReader;
+r.onload=()=>resolve(r.result);
+r.onerror=()=>resolve("");
+r.readAsDataURL(file)
+} )
+},
+
+async hashText(v){
+if(window.crypto?.subtle){
+let b=await crypto.subtle.digest(
+"SHA-256",new TextEncoder().encode(v)
+);
+return [...new Uint8Array(b)]
+.map(x=>x.toString(16).padStart(2,"0")).join("")
+}
+let h=0;
+for(let i=0;i<v.length;i++)
+h=((h<<5)-h)+v.charCodeAt(i)|0;
+return String(h)
+}
+};
+
+const ICONS={
+heart:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M20.8 8.6c0 5.5-8.8 10.4-8.8 10.4S3.2 14.1 3.2 8.6A5.1 5.1 0 0 1 12 5a5.1 5.1 0 0 1 8.8 3.6Z"/>
+</svg>`,
+
+laugh:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="12" cy="12" r="9"/>
+<path d="M8 14s1.3 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/>
+</svg>`,
+
+wow:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="12" cy="12" r="9"/>
+<circle cx="9" cy="9" r=".7"/>
+<circle cx="15" cy="9" r=".7"/>
+<circle cx="12" cy="14" r="2"/>
+</svg>`,
+
+fire:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M12 21c4 0 7-2.7 7-6.6 0-2.8-1.7-5.1-4.3-7.2.1 2.1-.7 3.3-1.7 4.1.2-3.8-1.5-6.5-4.2-8.8.2 4.1-3.8 6.1-3.8 10.4C5 18 8 21 12 21Z"/>
+</svg>`,
+
+sad:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="12" cy="12" r="9"/>
+<path d="M8 16s1.3-2 4-2 4 2 4 2M9 9h.01M15 9h.01"/>
+</svg>`,
+
+angry:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="12" cy="12" r="9"/>
+<path d="m8 9 2 1M16 9l-2 1M8 16c2-2 6-2 8 0"/>
+</svg>`,
+
+like:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M7 10v10H4V10h3ZM7 20h10a2 2 0 0 0 2-2l1-6a2 2 0 0 0-2-2h-5l1-5a3 3 0 0 0-4 0l-2 5"/>
+</svg>`,
+
+reply:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M20 11.5a7.5 7.5 0 0 1-8 7.5 8.5 8.5 0 0 1-4-.9L4 20l1.4-3.4A7.4 7.4 0 0 1 4.5 12 7.5 7.5 0 0 1 12 4.5a7.5 7.5 0 0 1 8 7Z"/>
+</svg>`,
+
+trash:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5M14 11v5"/>
+</svg>`,
+
+play:`<svg viewBox="0 0 24 24" fill="currentColor">
+<path d="m8 5 11 7-11 7V5Z"/>
+</svg>`,
+
+pause:`<svg viewBox="0 0 24 24" fill="currentColor">
+<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>
+</svg>`,
+
+send:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="m21 3-7.5 18-3.5-7-7-3.5L21 3Z"/>
+<path d="m10 14 5-5"/>
+</svg>`
+};
+
+const modules={};
+
+const NOVA_DELETE_SVG=`<svg class="modernDeleteIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"/><path d="M9 7V4.8h6V7"/><path d="M7 7l.8 12h8.4L17 7"/><path d="M10 11v5M14 11v5"/></svg>`;
+
+modules.db={
+users:[],
+posts:[],
+stories:[],
+messages:[],
+notifications:[],
+settings:{
+notifications:true,
+online:true,
+autoplay:true,
+theme:"dark"
+},
+chats:{},
+
+init(){
+  this.users=[];
+  this.posts=[];
+  this.stories=[];
+  this.messages=[];
+  this.notifications=[];
+  this.settings={notifications:true,online:true,autoplay:true,theme:"dark"};
+  this.chats={};
+},
+
+isOwner(id){
+  const fu=window.NOVA_BACKEND?.auth?.currentUser;
+  if(!fu)return false;
+  const mapped=String(window.NOVA_OWNER_UID||"");
+  const target=String(id||fu.uid);
+  return !!mapped && fu.uid===mapped && target===mapped;
+},
+
+setVerified(id,value){
+if(!this.isOwner())return false;
+let u=this.user(id);
+if(!u||u.id===window.NOVA_OWNER_UID)return false;
+u.verified=!!value;
+this.save();
+return true
+},
+
+save(){
+[
+"users","posts","stories","messages",
+"notifications","settings","chats"
+].forEach(k=>NOVA.set(k,this[k]))
+},
+
+me(){
+return this.user(auth.session?.userId||"me")
+},
+
+user(id){
+return this.users.find(x=>x.id===id)
+},
+
+post(id){
+return this.posts.find(x=>x.id===id)
+},
+
+allPostComments(id){
+  const out=[];
+  (Array.isArray(this.users)?this.users:[]).forEach(u=>(u.postComments||[]).forEach(c=>{if(c.postId===id)out.push(c)}));
+  const p=this.post(id);
+  (p?.comments||[]).forEach(c=>{if(!out.some(x=>x.id===c.id))out.push(c)});
+  return out.sort((a,b)=>a.time-b.time);
+},
+
+following(id){
+return(this.me()?.followingUsers||[]).includes(id)
+},
+
+followingList(id){
+const u=this.user(id||this.me()?.id);
+return (u?.followingUsers||[]).map(x=>this.user(x)).filter(Boolean);
+},
+
+followerList(id){
+const target=String(id||this.me()?.id);
+return (Array.isArray(this.users)?this.users:[]).filter(u=>(u.followingUsers||[]).includes(target));
+},
+
+followerCount(id){return this.followerList(id).length},
+
+follow(id){
+let m=this.me(),u=this.user(id);
+if(!u||!m||id===m.id)return;
+m.followingUsers=Array.isArray(m.followingUsers)?m.followingUsers:[];
+if(!m.followingUsers.includes(id))m.followingUsers.push(id);
+this.save();
+this.saveUserCloud(m.id,{followingUsers:m.followingUsers});
+},
+
+unfollow(id){
+let m=this.me();
+if(!m)return;
+m.followingUsers=(m.followingUsers||[]).filter(x=>x!==id);
+this.save();
+this.saveUserCloud(m.id,{followingUsers:m.followingUsers});
+},
+
+updateNotificationBadge(){
+const el=$("notifBadge");
+if(!el)return;
+const n=(Array.isArray(this.notifications)?this.notifications:[]).filter(x=>!x.read).length;
+const me=this.me()?.id;
+const chatUnread=me?Object.values(this.chats||{}).reduce((sum,arr)=>sum+(Array.isArray(arr)?arr.filter(m=>m.from!==me&&!m.read).length:0),0):0;
+const total=n+chatUnread;
+el.textContent=total>99?"99+":String(total||"");
+},
+
+notify(type,user,text,extra={}){
+if(!this.settings.notifications)return;
+
+this.notifications.unshift({
+id:NOVA.uid("notif"),
+type,
+user,
+text,
+time:Date.now(),
+read:false,
+...extra
+});
+
+this.notifications=this.notifications.slice(0,100);
+this.updateNotificationBadge();
+this.save();
+},
+
+chatKey(a,b){
+return[a,b].sort().join("__")
+},
+
+chat(a,b){
+
+let k=this.chatKey(a,b);
+
+if(!this.chats[k]){
+this.chats[k]=[];
+}
+
+if(!Array.isArray(this.chats[k])){
+this.chats[k]=this.chats[k].messages||[];
+}
+
+this.chats[k].forEach(m=>{
+m.reactionBy??={}
+});
+
+return this.chats[k]
+},
+
+saveUserCloud(uid,patch){
+  if(!uid||!fAuth.currentUser||fAuth.currentUser.uid!==uid)return Promise.resolve(false);
+  return userDoc(uid).set(clean(patch),{merge:true}).then(()=>true).catch(err=>{
+    console.error("NOVA user cloud save failed:",err);
+    NOVA.toast("Cloud save failed: "+(err?.message||"Supabase error"));
+    return false;
+  });
+},
+
+notifyUserCloud(recipient,type,actor,text,extra={}){
+  if(!recipient||!fAuth.currentUser)return Promise.resolve(false);
+  const item={id:NOVA.uid("notif"),type,user:actor,recipient,text,time:Date.now(),read:false,...extra};
+  const FV=window.NOVA_BACKEND.fieldValue;
+  if(!FV)return Promise.resolve(false);
+  return notifDoc(recipient).set({items:FV.arrayUnion(item),updated:Date.now()},{merge:true}).then(()=>true).catch(err=>{
+    console.error("NOVA notification cloud failed:",err);
+    return false;
+  });
+},
+
+saveChatCloud(key){
+  if(!fAuth.currentUser||!key)return Promise.resolve(false);
+  const parts=String(key).split("__");
+  if(parts.length!==2||!parts.includes(fAuth.currentUser.uid))return Promise.resolve(false);
+  this._chatWriteQueue??={};
+  this._chatPending??={};
+  const localSnapshot=Array.isArray(this.chats[key])?this.chats[key].map(m=>clean(m)):[];
+  this._chatPending[key]=localSnapshot;
+  const run=async()=>{
+    const ref=fdb.collection("chats").doc(key);
+    try{
+      await fdb.runTransaction(async tx=>{
+        const snap=await tx.get(ref);
+        const remote=Array.isArray(snap.data()?.messages)?snap.data().messages:[];
+        const byId=new Map(remote.map(m=>[m.id,m]));
+        localSnapshot.forEach(m=>byId.set(m.id,m));
+        const messages=[...byId.values()].sort((a,b)=>(a.time||0)-(b.time||0));
+        tx.set(ref,{participants:parts,messages,updated:Date.now()},{merge:true});
+      });
+      if(this._chatPending[key]===localSnapshot)delete this._chatPending[key];
+      return true;
+    }catch(err){
+      console.error("NOVA chat cloud save failed:",err);
+      window.NOVA_ONLINE_ERROR=err?.message||String(err);
+      return false;
+    }
+  };
+  const prev=this._chatWriteQueue[key]||Promise.resolve();
+  const next=prev.catch(()=>{}).then(run);
+  this._chatWriteQueue[key]=next.finally(()=>{
+    if(this._chatWriteQueue[key]===next)this._chatWriteQueue[key]=Promise.resolve();
+  });
+  return next;
+},
+
+sendMessage(to,obj){
+
+let me=this.me()?.id;
+
+if(!me||!to)return null;
+
+let arr=this.chat(me,to);
+
+let msg={
+id:NOVA.uid("msg"),
+from:me,
+to,
+time:Date.now(),
+kind:"text",
+text:"",
+replyTo:null,
+reactionBy:{},
+...obj
+};
+
+msg.read=false;
+arr.push(msg);
+
+const key=this.chatKey(me,to);
+msg.cloudPromise=this.saveChatCloud(key);
+this.notifyUserCloud(to,"message",me,"sent you a message",{chat:me,messageId:msg.id});
+this.updateNotificationBadge();
+return msg
+}
+};
+
+const ui={
+verified(u,cl=""){
+if(!u?.verified&&u?.id!==window.NOVA_OWNER_UID)return"";
+return`<span class="verifiedBadge ${cl}" title="Verified" aria-label="Verified">
+<svg viewBox="0 0 24 24" aria-hidden="true">
+<path fill="#1877F2" d="M12 2.7l2.15 1.32 2.5-.05 1.15 2.22 2.2 1.2-.08 2.5L21.2 12l-1.28 2.11.08 2.5-2.2 1.2-1.15 2.22-2.5-.05L12 21.3l-2.15-1.32-2.5.05-1.15-2.22-2.2-1.2.08-2.5L2.8 12l1.28-2.11-.08-2.5 2.2-1.2 1.15-2.22 2.5.05L12 2.7Z"/>
+<path d="m8.2 12.2 2.35 2.35 5.25-5.25" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></span>`
+},
+name(u,cl=""){
+if(!u)return`<span class="verifiedName">User</span>`;
+return`<span class="verifiedName ${cl}">${NOVA.esc(u.name||"User")}${this.verified(u)}</span>`
+},
+avatar(u,cl=""){
+if(!u)return`<div class="avatar ${cl}">?</div>`;
+
+return u.avatar
+?`<div class="avatar ${cl} ${u.online?"online":""}">
+<img src="${NOVA.esc(u.avatar)}">
+</div>`
+:`<div class="avatar ${cl} ${u.online?"online":""}">
+${NOVA.esc((u.name||"?")[0])}
+</div>`
+},
+
+head(u,p){
+return`<div class="postHead" data-user="${u.id}">
+${this.avatar(u)}
+<div class="userInfo">
+<div class="name">${ui.name(u)}</div>
+<div class="handle">${NOVA.esc(u.handle)}</div>
+</div>
+<div class="time">${p?NOVA.time(p.created):""}</div>
+</div>`
+},
+
+text(t){
+return NOVA.esc(t).replace(
+/(^|\s)(#[a-zA-Z0-9_]+)/g,
+'$1<span style="color:#a78bfa;font-weight:700">$2</span>'
+)
+},
+
+reaction(type){
+return ICONS[type]||ICONS.heart
+}
+};
+
+modules.stories={
+
+grouped(){
+
+let map=new Map;
+
+[...modules.db.stories]
+.sort((a,b)=>a.created-b.created)
+.forEach(s=>{
+
+if(!map.has(s.user))map.set(s.user,[]);
+
+map.get(s.user).push(s)
+});
+
+return[...map.entries()]
+.map(([user,items])=>({user,items}))
+},
+
+stopVideo(){
+
+let v=$("storyVideo");
+
+if(v){
+try{
+v.pause();
+v.removeAttribute("src");
+v.load()
+}catch(e){}
+}
+
+clearTimeout(NOVA.state.storyTimer);
+NOVA.state.storyTimer=null;
+NOVA.state.storyPausedByLongPress=false
+},
+
+render(){
+
+let groups=this.grouped();
+
+let area=$("storiesArea");
+if(!area)return;
+
+area.innerHTML=`<div class="stories">
+
+<button class="story" data-story-create>
+<div class="storyRing">
+<div class="storyInner">
+<svg class="svg" viewBox="0 0 24 24"
+fill="none" stroke="currentColor" stroke-width="2">
+<path d="M12 5v14M5 12h14"/>
+</svg>
+</div>
+</div>
+Your story
+</button>
+
+${groups.map(g=>{
+
+let s=g.items.at(-1);
+let u=modules.db.user(g.user);
+
+return`<button class="story" data-story-user="${g.user}">
+<div class="storyRing">
+<div class="storyInner">
+${
+s.media
+?s.mediaType==="video"
+?`<video src="${NOVA.esc(s.media)}"
+muted playsinline preload="metadata"></video>`
+:`<img src="${NOVA.esc(s.media)}">`
+:`<span>✦</span>`
+}
+</div>
+</div>
+${NOVA.esc((u?.name||"User").split(" ")[0])}${ui.verified(u)}
+</button>`
+
+}).join("")}
+
+</div>`
+},
+
+create(){
+
+NOVA.modal("Create story",`
+<div class="form">
+
+<textarea id="storyText" rows="4"
+placeholder="Write your story..."></textarea>
+
+<input id="storyFile" type="file"
+accept="image/*,video/*">
+
+<video id="storyVideoPreview"
+class="preview" playsinline muted></video>
+
+<img id="storyImagePreview" class="preview">
+
+<div id="storyFileInfo" class="smallText"></div>
+
+<button class="btn full" data-story-submit>
+Share story
+</button>
+
+</div>`);
+
+$("storyFile").onchange=e=>
+this.file(e.target.files[0])
+},
+
+async file(f){
+
+if(!f)return;
+
+let data=await NOVA.image(f);
+
+$("storyImagePreview").style.display="none";
+$("storyVideoPreview").style.display="none";
+
+if(f.type.startsWith("video/")){
+
+$("storyVideoPreview").src=data;
+$("storyVideoPreview").dataset.data=data;
+$("storyVideoPreview").dataset.type="video";
+$("storyVideoPreview").style.display="block";
+$("storyFileInfo").textContent="Video selected"
+
+}else{
+
+$("storyImagePreview").src=data;
+$("storyImagePreview").dataset.data=data;
+$("storyImagePreview").dataset.type="image";
+$("storyImagePreview").style.display="block";
+$("storyFileInfo").textContent="Photo selected"
+
+}
+},
+
+submit(){
+
+let t=$("storyText").value.trim();
+let v=$("storyVideoPreview");
+let i=$("storyImagePreview");
+
+let media=v.dataset.data||i.dataset.data||"";
+let type=v.dataset.type||i.dataset.type||"text";
+
+if(!t&&!media)
+return NOVA.toast("Add text or media");
+
+let d=modules.db;
+let m=d.me();
+
+d.stories.push({
+id:NOVA.uid("story"),
+user:m.id,
+text:t,
+media,
+mediaType:type,
+reactions:{},
+replies:[],
+created:Date.now()
+});
+
+d.save();
+NOVA.closeModal();
+NOVA.render("home");
+NOVA.toast("Story added ✨")
+},
+
+openUser(id){
+
+this.stopVideo();
+
+NOVA.state.storyUser=id;
+NOVA.state.storyIndex=0;
+
+this.show()
+},
+
+show(){
+
+this.stopVideo();
+
+let id=NOVA.state.storyUser;
+
+let list=this.grouped()
+.find(x=>x.user===id)?.items||[];
+
+if(!list.length)return this.close();
+
+if(NOVA.state.storyIndex>=list.length)
+NOVA.state.storyIndex=list.length-1;
+
+let s=list[NOVA.state.storyIndex];
+let u=modules.db.user(id);
+
+let reactions=[
+"heart","laugh","wow","fire",
+"like","sad","angry"
+];
+
+let myReaction=null;
+
+Object.keys(s.reactions||{}).forEach(k=>{
+if((s.reactions[k]||[]).includes(modules.db.me().id))
+myReaction=k
+});
+
+$("viewerIn").innerHTML=`
+
+<div class="viewerTop">
+
+<div class="progress"></div>
+
+<div class="row" style="margin-top:9px">
+
+${ui.avatar(u,"sm")}
+
+<div style="flex:1">
+<b>${ui.name(u)}</b>
+<div class="smallText">${NOVA.time(s.created)}</div>
+</div>
+
+</div>
+</div>
+
+${(u?.id===modules.db.me()?.id || modules.db.isOwner()) ? `<button class="viewerBtn storyMenuBtn" data-story-menu="${s.id}">•••</button>` : ""}
+
+<button class="viewerClose" data-story-close>×</button>
+
+${
+s.media
+?s.mediaType==="video"
+?`<video
+id="storyVideo"
+class="viewerMedia"
+src="${NOVA.esc(s.media)}"
+autoplay
+playsinline
+preload="auto"
+></video>`
+:`<img class="viewerMedia"
+src="${NOVA.esc(s.media)}">`
+:`<div class="viewerText">${ui.text(s.text)}</div>`
+}
+
+${s.text&&s.media
+?`<div style="
+position:absolute;bottom:155px;left:15px;right:15px;
+z-index:9;background:#0007;padding:10px;
+border-radius:13px">${ui.text(s.text)}</div>`
+:""}
+
+<div class="viewerNav">
+<button class="viewerSide" data-story-prev></button>
+<button class="viewerSide" data-story-next></button>
+</div>
+
+<div class="storyReplies">
+
+${(s.replies||[]).map(r=>{
+
+let x=modules.db.user(r.user);
+
+return`<div class="storyReply">
+<b>${ui.name(x)}</b>
+${NOVA.esc(r.text)}
+</div>`
+
+}).join("")}
+
+</div>
+
+<div class="storyReactRow">
+
+${reactions.map(x=>
+`<button
+class="${myReaction===x?"active":""}"
+data-story-react="${x}">
+${ui.reaction(x)}
+</button>`
+).join("")}
+
+</div>
+
+<div class="viewerBottom">
+
+<input id="storyReplyInput"
+placeholder="Reply to story...">
+
+<button class="viewerBtn" data-story-reply>
+${ICONS.send}
+</button>
+
+</div>
+`;
+
+$("viewer").classList.add("open");
+
+let vid=$("storyVideo");
+
+if(vid){
+
+vid.muted=false;
+
+let playPromise=vid.play();
+
+if(playPromise?.catch){
+playPromise.catch(()=>{
+vid.muted=true;
+vid.play().catch(()=>{})
+})
+}
+
+let pressTimer=null;
+
+const startPress=()=>{
+clearTimeout(pressTimer);
+
+pressTimer=setTimeout(()=>{
+
+NOVA.state.storyPausedByLongPress=true;
+
+try{vid.pause()}catch(err){}
+
+},420)
+};
+
+const endPress=()=>{
+clearTimeout(pressTimer);
+
+if(NOVA.state.storyPausedByLongPress){
+
+NOVA.state.storyPausedByLongPress=false;
+
+if(!vid.ended){
+vid.play().catch(()=>{})
+}
+
+}
+};
+
+vid.addEventListener("pointerdown",startPress);
+vid.addEventListener("pointerup",endPress);
+vid.addEventListener("pointercancel",endPress);
+vid.addEventListener("pointerleave",endPress);
+
+vid.addEventListener("ended",()=>{
+if($("viewer").classList.contains("open"))
+this.next()
+});
+
+}
+},
+
+react(type){
+
+let list=this.grouped()
+.find(x=>x.user===NOVA.state.storyUser)?.items||[];
+
+let s=list[NOVA.state.storyIndex];
+
+if(!s)return;
+
+let me=modules.db.me().id;
+
+let owner=modules.db.me();
+owner.storyReactions=owner.storyReactions||{};
+let current=owner.storyReactions[s.id]||null;
+if(current===type) delete owner.storyReactions[s.id]; else owner.storyReactions[s.id]=type;
+s.reactions=s.reactions||{};
+Object.keys(s.reactions).forEach(k=>s.reactions[k]=(s.reactions[k]||[]).filter(x=>x!==me));
+if(owner.storyReactions[s.id]){s.reactions[owner.storyReactions[s.id]]=[...(s.reactions[owner.storyReactions[s.id]]||[]),me];
+
+if(s.user!==me){
+
+modules.db.notifyUserCloud(
+ s.user,
+ "story_reaction",
+ me,
+ "reacted to your story",
+ {storyId:s.id}
+);
+
+}
+}
+
+modules.db.saveUserCloud(me,{storyReactions:owner.storyReactions});
+modules.db.saveStoryCloud?.(s.id).then(ok=>{if(!ok)NOVA.toast("Story reaction could not be saved")});
+
+this.show();
+
+NOVA.toast(current===type?"Reaction removed":"Reaction sent")
+},
+
+reply(){
+
+let inp=$("storyReplyInput");
+let text=inp?.value.trim();
+
+if(!text)return;
+
+let list=this.grouped()
+.find(x=>x.user===NOVA.state.storyUser)?.items||[];
+
+let s=list[NOVA.state.storyIndex];
+
+if(!s)return;
+
+let me=modules.db.me().id;
+
+s.replies??=[];
+
+s.replies.push({
+id:NOVA.uid("reply"),
+user:me,
+text,
+time:Date.now()
+});
+
+if(s.user!==me){
+
+modules.db.sendMessage(
+s.user,
+{
+kind:"text",
+text:`Story: ${s.text||"Photo/video story"}\nReply: ${text}`,
+replyTo:null,
+storyId:s.id,
+storyReply:true
+}
+);
+
+modules.db.notifyUserCloud(
+ s.user,
+ "story_reply",
+ me,
+ "replied to your story",
+ {storyId:s.id,chat:me}
+);
+
+}
+
+modules.db.save();
+
+this.show();
+
+NOVA.toast("Story reply sent")
+},
+
+next(){
+
+let list=this.grouped()
+.find(x=>x.user===NOVA.state.storyUser)?.items||[];
+
+if(NOVA.state.storyIndex<list.length-1){
+
+this.stopVideo();
+
+NOVA.state.storyIndex++;
+
+this.show()
+
+}else{
+
+this.close()
+
+}
+},
+
+prev(){
+
+if(NOVA.state.storyIndex>0){
+
+this.stopVideo();
+
+NOVA.state.storyIndex--;
+
+this.show()
+
+}
+},
+
+close(){
+
+this.stopVideo();
+
+let viewer=$("viewer");
+
+viewer.classList.remove("open");
+
+setTimeout(()=>{
+if(!$("viewer").classList.contains("open")){
+$("viewerIn").innerHTML=""
+}
+},20);
+
+NOVA.state.storyUser=null;
+NOVA.state.storyIndex=0
+}
+};
+
+modules.posts={
+
+create(){
+
+NOVA.modal("Create post",`
+<div class="form">
+
+<textarea id="postText" rows="5"
+placeholder="What's happening?"></textarea>
+
+<input id="postFile" type="file"
+accept="image/*,video/*">
+
+<img id="postImagePreview" class="preview">
+
+<video id="postVideoPreview"
+class="preview" controls playsinline></video>
+
+<div id="postFileInfo" class="smallText"></div>
+
+<button class="btn full" data-create-submit>
+Publish post
+</button>
+
+</div>`);
+
+$("postFile").onchange=async e=>{
+
+let f=e.target.files[0];
+
+if(!f)return;
+
+let x=await NOVA.image(f);
+
+$("postImagePreview").style.display="none";
+$("postVideoPreview").style.display="none";
+
+if(f.type.startsWith("video/")){
+
+$("postVideoPreview").src=x;
+$("postVideoPreview").dataset.data=x;
+$("postVideoPreview").dataset.type="video";
+$("postVideoPreview").style.display="block";
+$("postFileInfo").textContent="Video selected"
+
+}else{
+
+$("postImagePreview").src=x;
+$("postImagePreview").dataset.data=x;
+$("postImagePreview").dataset.type="image";
+$("postImagePreview").style.display="block";
+$("postFileInfo").textContent="Photo selected"
+
+}
+}
+},
+
+submit(){
+
+let text=$("postText").value.trim();
+let i=$("postImagePreview");
+let v=$("postVideoPreview");
+
+let media=v.dataset.data||i.dataset.data||"";
+let type=v.dataset.type||i.dataset.type||"";
+
+if(!text&&!media)
+return NOVA.toast("Write something or add media");
+
+let d=modules.db;
+
+d.posts.unshift({
+id:NOVA.uid("post"),
+user:d.me().id,
+text,
+media,
+mediaType:type,
+likes:[],
+comments:[],
+reactions:{},
+reposts:0,
+savedBy:[],
+created:Date.now()
+});
+
+d.save();
+
+NOVA.closeModal();
+NOVA.go("home");
+NOVA.toast("Post published")
+},
+
+card(p){
+
+let d=modules.db;
+let u=d.user(p.user);
+let me=d.me().id;
+
+let liked=(modules.db.me()?.likedPosts||[]).includes(p.id) || (p.likes||[]).includes(me);
+let saved=(modules.db.me()?.savedPosts||[]).includes(p.id) || (p.savedBy||[]).includes(me);
+
+let myReact=modules.db.me()?.postReactions?.[p.id] || Object.keys(p.reactions||{}).find(k=>(p.reactions[k]||[]).includes(me));
+
+let reactCount=Object.values(p.reactions||{})
+.reduce((a,b)=>a+b.length,0);
+
+return`<article class="card" id="post-${NOVA.esc(p.id)}">
+
+${ui.head(u,p)}
+
+<div class="postText">${ui.text(p.text)}</div>
+
+${p.media
+?(p.mediaType==="video"
+?`<video class="media"
+src="${NOVA.esc(p.media)}"
+controls playsinline preload="metadata"></video>`
+:`<img class="media"
+src="${NOVA.esc(p.media)}">`)
+:""}
+
+<div class="actions">
+
+<button class="action ${liked?"active":""}"
+data-post="like" data-id="${p.id}">
+${ICONS.heart}<span>${p.likes.length}</span>
+</button>
+
+<button class="action"
+data-post="comments" data-id="${p.id}">
+${ICONS.reply}<span>${p.comments.length}</span>
+</button>
+
+<button class="action ${myReact?"active":""}"
+data-post="reaction" data-id="${p.id}">
+${myReact?ui.reaction(myReact):ui.reaction("fire")}
+<span>${reactCount||""}</span>
+</button>
+
+<button class="action"
+data-post="repost" data-id="${p.id}">
+↻ <span>${p.reposts||0}</span>
+</button>
+
+<button class="action"
+data-post="save" data-id="${p.id}">
+${saved?"◆":"◇"}
+</button>
+
+<button class="action"
+data-post="share" data-id="${p.id}">
+↗
+</button>
+
+<button class="action"
+data-post="menu" data-id="${p.id}">
+•••
+</button>
+
+</div>
+
+<div class="meta">
+${NOVA.time(p.created)} · ${p.likes.length} likes
+</div>
+
+${p.comments.length
+?`<div class="commentPreview">
+<b>${ui.name(d.user(p.comments.at(-1).user))}</b>
+${NOVA.esc(p.comments.at(-1).text)}
+</div>`
+:""}
+
+</article>`
+},
+
+like(id){
+let d=modules.db,p=d.post(id),m=d.me();
+if(!p||!m)return;
+m.likedPosts=Array.isArray(m.likedPosts)?m.likedPosts:[];
+const has=m.likedPosts.includes(id);
+m.likedPosts=has?m.likedPosts.filter(x=>x!==id):[...m.likedPosts,id];
+p.likes=Array.isArray(p.likes)?p.likes:[];
+p.likes=has?p.likes.filter(x=>x!==m.id):[...new Set([...p.likes,m.id])];
+if(p.user!==m.id && !has) d.notifyUserCloud(p.user,"like",m.id,"liked your post",{postId:id});
+d.saveUserCloud(m.id,{likedPosts:m.likedPosts});
+d.postLikeCloud?.(id,!has).then(ok=>{if(!ok)NOVA.toast("Like could not be saved")});
+NOVA.render(NOVA.state.screen)
+},
+
+save(id){
+let d=modules.db,p=d.post(id),m=d.me();
+if(!p||!m)return;
+m.savedPosts=Array.isArray(m.savedPosts)?m.savedPosts:[];
+const has=m.savedPosts.includes(id);
+m.savedPosts=has?m.savedPosts.filter(x=>x!==id):[...m.savedPosts,id];
+p.savedBy=has?(p.savedBy||[]).filter(x=>x!==m.id):[...new Set([...(p.savedBy||[]),m.id])];
+d.saveUserCloud(m.id,{savedPosts:m.savedPosts});
+d.postSaveCloud?.(id,!has).then(ok=>{if(!ok)NOVA.toast("Save could not be saved")});
+NOVA.render(NOVA.state.screen)
+},
+repost(id){
+
+let d=modules.db;
+let p=d.post(id);
+let m=d.me().id;
+
+d.posts.unshift({
+...JSON.parse(JSON.stringify(p)),
+id:NOVA.uid("post"),
+user:m,
+text:"Reposted: "+p.text,
+likes:[],
+comments:[],
+reactions:{},
+reposts:0,
+savedBy:[],
+created:Date.now()
+});
+
+const repost=d.posts[0];
+d.savePostCloud?.(repost.id).then(ok=>{if(!ok)NOVA.toast("Repost could not be saved")});
+NOVA.go("home");
+NOVA.toast("Reposted")
+},
+
+reaction(id){
+
+let p=modules.db.post(id);
+let me=modules.db.me().id;
+
+let current=Object.keys(p.reactions||{})
+.find(k=>(p.reactions[k]||[]).includes(me));
+
+let types=[
+"heart","laugh","wow","fire",
+"like","sad","angry"
+];
+
+NOVA.modal("Reaction",`
+<div class="reactions">
+
+${types.map(x=>
+`<button
+class="react ${current===x?"active":""}"
+data-reaction="${x}"
+data-id="${id}">
+${ui.reaction(x)}
+</button>`
+).join("")}
+
+</div>`)
+},
+
+react(id,type){
+let p=modules.db.post(id),m=modules.db.me();
+if(!p||!m)return;
+m.postReactions=m.postReactions||{};
+const current=m.postReactions[id]||null;
+if(current===type) delete m.postReactions[id]; else m.postReactions[id]=type;
+p.reactions=p.reactions||{};
+Object.keys(p.reactions).forEach(k=>p.reactions[k]=(p.reactions[k]||[]).filter(x=>x!==m.id));
+if(m.postReactions[id]){p.reactions[m.postReactions[id]]=[...(p.reactions[m.postReactions[id]]||[]),m.id];}
+if(p.user!==m.id && current!==type) modules.db.notifyUserCloud(p.user,"reaction",m.id,"reacted to your post",{postId:id});
+modules.db.saveUserCloud(m.id,{postReactions:m.postReactions});
+modules.db.postReactionCloud?.(id,m.postReactions[id]||null).then(ok=>{if(!ok)NOVA.toast("Reaction could not be saved")});
+NOVA.closeModal();
+NOVA.render(NOVA.state.screen)
+},
+comments(id){
+
+let p=modules.db.post(id);
+let d=modules.db;
+
+NOVA.modal("Comments",`
+
+<div class="comments">
+
+${d.allPostComments(id).map(c=>{
+
+let u=d.user(c.user);
+
+return`<div class="comment">
+
+${ui.avatar(u,"sm")}
+
+<div class="commentBody">
+<b>${ui.name(u)}</b>
+<div>${NOVA.esc(c.text)}</div>
+<div class="commentTime">
+${NOVA.time(c.time)}
+</div>
+</div>
+
+</div>`
+
+}).join("")
+||`<div class="empty">No comments yet</div>`}
+
+</div>
+
+<div class="chatInput">
+
+<input id="commentInput"
+placeholder="Write a comment...">
+
+<button class="btn"
+data-comment="${id}">
+Send
+</button>
+
+</div>`)
+},
+
+addComment(id){
+let v=$("commentInput")?.value.trim();
+if(!v)return;
+let d=modules.db,m=d.me(),p=d.post(id);
+if(!m||!p)return;
+m.postComments=Array.isArray(m.postComments)?m.postComments:[];
+m.postComments.push({id:NOVA.uid("comment"),postId:id,user:m.id,text:v,time:Date.now()});
+p.comments=Array.isArray(p.comments)?p.comments:[];
+p.comments.push(m.postComments.at(-1));
+if(p.user!==m.id)d.notifyUserCloud(p.user,"comment",m.id,"commented on your post",{postId:id});
+d.saveUserCloud(m.id,{postComments:m.postComments});
+const comment=m.postComments.at(-1);
+d.postCommentCloud?.(id,comment).then(ok=>{if(!ok)NOVA.toast("Comment could not be saved")});
+NOVA.closeModal();
+NOVA.render(NOVA.state.screen)
+},
+share(id){
+
+let p=modules.db.post(id);
+
+if(navigator.share){
+
+navigator.share({
+title:"NOVA",
+text:p.text
+}).catch(()=>{})
+
+}else if(navigator.clipboard){
+
+navigator.clipboard
+.writeText(p.text)
+.then(()=>NOVA.toast("Copied"))
+
+}
+},
+
+menu(id){
+
+let p=modules.db.post(id);
+let own=p.user===modules.db.me().id;
+
+NOVA.modal("Post options",`
+
+<div class="option"
+data-menu="stats"
+data-id="${id}">
+
+<div class="icon">◫</div>
+
+<div class="optionMain">
+<b>Statistics</b>
+<span>View performance</span>
+</div>
+
+›
+</div>
+
+${own
+?`<div class="option"
+data-menu="delete"
+data-id="${id}">
+
+<div class="icon">
+${ICONS.trash}
+</div>
+
+<div class="optionMain">
+<b>Delete post</b>
+<span>Remove permanently</span>
+</div>
+
+›
+</div>`
+:""}
+
+`)
+}
+};
+
+modules.home={
+
+render(){
+
+let d=modules.db;
+
+$("home").innerHTML=`
+
+<div class="createBar card">
+
+${ui.avatar(d.me(),"sm")}
+
+<button class="fakeInput"
+data-action="createPost">
+What's happening?
+</button>
+
+<button class="circle"
+data-action="createPost">
+
+<svg class="svg"
+viewBox="0 0 24 24"
+fill="none"
+stroke="currentColor"
+stroke-width="2">
+<path d="M12 5v14M5 12h14"/>
+</svg>
+
+</button>
+
+</div>
+
+<div id="storiesArea"></div>
+
+${[...d.posts]
+.sort((a,b)=>b.created-a.created)
+.map(p=>modules.posts.card(p))
+.join("")}
+
+`;
+
+modules.stories.render()
+}
+};
+
+modules.explore={
+
+render(){
+
+let d=modules.db;
+let q=NOVA.state.search.toLowerCase();
+
+let users=(Array.isArray(d.users)?d.users:[]).filter(u=>
+(u.name+" "+u.handle+" "+u.bio)
+.toLowerCase().includes(q)
+);
+
+let posts=(Array.isArray(d.posts)?d.posts:[]).filter(p=>
+(p.text||"").toLowerCase().includes(q)
+);
+
+$("explore").innerHTML=`
+
+<div class="title">Explore</div>
+
+<div class="search">
+
+<span class="searchIcon">
+
+<svg class="svg"
+viewBox="0 0 24 24"
+fill="none"
+stroke="currentColor"
+stroke-width="2">
+
+<circle cx="11" cy="11" r="7"/>
+<path d="m20 20-4-4"/>
+
+</svg>
+
+</span>
+
+<input id="exploreSearch"
+value="${NOVA.esc(NOVA.state.search)}"
+placeholder="Search people, posts...">
+
+</div>
+
+${q
+?`
+
+<div class="card">
+
+${users.map(u=>`
+
+<div class="people"
+data-user="${u.id}">
+
+${ui.avatar(u,"sm")}
+
+<div class="userInfo">
+<div class="name">${ui.name(u)}</div>
+<div class="handle">${NOVA.esc(u.handle)}</div>
+</div>
+
+${u.id!==d.me().id
+?`<button class="btn small secondary"
+data-follow="${u.id}">
+${d.following(u.id)?"Following":"Follow"}
+</button>`
+:""}
+
+</div>
+
+`).join("")}
+
+</div>
+
+${posts.map(p=>modules.posts.card(p)).join("")
+||`<div class="empty">No posts found</div>`}
+
+`
+:`
+
+<div class="card">
+
+<div class="option">
+
+<div class="icon">⌁</div>
+
+<div class="optionMain">
+<b>Trending</b>
+<span>#nova · #music · #travel · #technology</span>
+</div>
+
+</div>
+
+<div class="option">
+
+<div class="icon">✦</div>
+
+<div class="optionMain">
+<b>Discover creators</b>
+<span>Find new people</span>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+${d.users
+.filter(u=>u.id!==d.me().id)
+.map(u=>`
+
+<div class="people"
+data-user="${u.id}">
+
+${ui.avatar(u,"sm")}
+
+<div class="userInfo">
+<div class="name">${ui.name(u)}</div>
+<div class="handle">${NOVA.esc(u.bio)}</div>
+</div>
+
+<button class="btn small secondary"
+data-follow="${u.id}">
+${d.following(u.id)?"Following":"Follow"}
+</button>
+
+</div>
+
+`).join("")}
+
+</div>
+
+`
+}`;
+
+$("exploreSearch")?.addEventListener("input",e=>{
+
+NOVA.state.search=e.target.value;
+
+this.render();
+
+let x=$("exploreSearch");
+
+if(x){
+x.focus();
+x.setSelectionRange(x.value.length,x.value.length)
+}
+
+})
+}
+};
+
+modules.create={
+
+render(){
+
+$("create").innerHTML=`
+
+<div class="title">Create</div>
+
+<div class="card">
+
+<div class="option"
+data-action="createPost">
+
+<div class="icon">＋</div>
+
+<div class="optionMain">
+<b>Post</b>
+<span>Text, photos and videos</span>
+</div>
+
+›
+</div>
+
+<div class="option"
+data-action="createStory">
+
+<div class="icon">○</div>
+
+<div class="optionMain">
+<b>Story</b>
+<span>Photo, video, reactions and replies</span>
+</div>
+
+›
+</div>
+
+</div>`
+}
+};
+
+modules.owner={
+open(){
+if(!modules.db.isOwner()){
+NOVA.toast("Owner only");
+return
+}
+this.render()
+},
+render(){
+let d=modules.db;
+if(!d.isOwner())return;
+NOVA.modal("Verified badges",`
+<div class="smallText" style="margin-bottom:12px">
+Give or remove the official blue badge from NOVA users.
+</div>
+
+<div class="card" style="margin:0 0 12px">
+<div class="option" data-action="ownerDeleteAllChats">
+<div class="icon">${NOVA_DELETE_SVG}</div>
+<div class="optionMain">
+<b>Delete all chats</b>
+<span>Clear every NOVA conversation for everyone</span>
+</div>
+›
+</div>
+</div>
+<div class="card" style="margin:0">
+${(Array.isArray(d.users)?d.users:[]).filter(u=>u.id!==window.NOVA_OWNER_UID).map(u=>`
+<div class="people">
+${ui.avatar(u,"sm")}
+<div class="userInfo">
+<div class="name">${ui.name(u)}</div>
+<div class="handle">${NOVA.esc(u.handle||"")}</div>
+</div>
+<button class="btn small ${u.verified?"secondary":""}" data-verified-user="${u.id}">
+${u.verified?"Remove":"Give badge"}
+</button>
+</div>
+`).join("")||`<div class="empty">No other users yet.</div>`}
+</div>
+`)
+},
+async toggle(id){
+if(!modules.db.isOwner())return NOVA.toast("Owner only");
+let u=modules.db.user(id);
+if(!u)return;
+let next=!u.verified;
+const ok=await modules.db.setVerified(id,next);
+if(ok){
+this.render();
+NOVA.toast(next?"Verified badge added ✓":"Verified badge removed");
+}else NOVA.toast("Could not update verification");
+},
+
+async deleteAllChats(){
+if(!modules.db.isOwner())return NOVA.toast("Owner only");
+if(!confirm("Delete ALL chats for ALL users? This cannot be undone."))return;
+
+try{
+const fb=window.NOVA_BACKEND?.db;
+if(!fb)throw new Error("Supabase database is not available");
+const snap=await fb.collection("chats").get();
+if(!snap.size){
+NOVA.toast("There are no chats to delete");
+return;
+}
+
+let batch=fb.batch();
+let count=0;
+for(const doc of snap.docs){
+batch.delete(doc.ref);
+count++;
+if(count===450){
+await batch.commit();
+ batch=fb.batch();
+ count=0;
+}
+}
+if(count)await batch.commit();
+
+modules.db.chats={};
+modules.db.updateNotificationBadge();
+NOVA.state.activeChat=null;
+NOVA.state.chatProfile=null;
+document.body.classList.remove("chat-open");
+NOVA.closeModal();
+NOVA.render("messages");
+NOVA.toast("All chats deleted for everyone ✓");
+}catch(e){
+console.error(e);
+const msg=e?.code==="permission-denied"?"Owner cloud access is not linked to this Supabase account yet.":(e?.message||"Supabase error");
+NOVA.toast("Could not delete all chats: "+msg);
+}
+}
+};
+
+modules.profile={
+
+render(){
+
+this.renderUser(
+modules.db.me().id,
+true
+)
+},
+
+renderUser(id,own=false){
+
+let d=modules.db;
+let u=d.user(id);
+
+if(!u)return;
+
+let posts=(Array.isArray(d.posts)?d.posts:[]).filter(p=>p.user===id);
+
+let tab=own
+?NOVA.state.profileTab
+:"posts";
+
+if(tab==="saved")
+posts=(Array.isArray(d.posts)?d.posts:[]).filter(p=>
+(p.savedBy||[]).includes(d.me().id)
+);
+
+if(tab==="liked")
+posts=(Array.isArray(d.posts)?d.posts:[]).filter(p=>
+(p.likes||[]).includes(d.me().id)
+);
+
+if(tab==="media")
+posts=posts.filter(p=>p.media);
+
+let stories=(Array.isArray(d.stories)?d.stories:[]).filter(s=>s.user===id);
+
+$("profile").innerHTML=`
+
+<div class="card profile">
+
+${stories.length?`<button class="profileStoryRingBtn" data-profile-story="${id}" aria-label="View story"><span class="profileStoryRing">${ui.avatar(u,"big")}</span></button>`:ui.avatar(u,"big")}
+
+<div class="profileName">
+${ui.name(u)}
+</div>
+
+<div class="handle">
+${NOVA.esc(u.handle)}
+</div>
+
+<div class="bio">
+${NOVA.esc(u.bio)}
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<b>${(Array.isArray(d.posts)?d.posts:[]).filter(p=>p.user===id).length}</b>
+<span>Posts</span>
+</div>
+
+<button class="stat clickable" data-followers="${id}"><b>${d.followerCount(id)}</b><span>Followers</span></button>
+
+<button class="stat clickable" data-following="${id}"><b>${(u.followingUsers||[]).length}</b><span>Following</span></button>
+
+</div>
+
+${own
+?`<button class="btn"
+data-action="editProfile">
+Edit profile
+</button>
+
+<button class="btn secondary"
+data-go="settings">
+Settings
+</button>`
+:`<button class="btn"
+data-follow="${id}">
+${d.following(id)?"Following":"Follow"}
+</button>
+
+<button class="btn secondary"
+data-start-chat="${id}">
+Message
+</button>`}
+
+</div>
+
+<div class="tabs">
+
+${["posts","media","saved","liked"]
+.map(x=>
+`<button
+class="tab ${tab===x?"active":""}"
+data-profile-tab="${x}"
+data-profile-owner="${id}">
+${x}
+</button>`
+).join("")}
+
+</div>
+
+${!own
+?`
+
+<div class="card">
+
+<button class="option" data-profile-story="${id}" style="width:100%;text-align:left">
+<div class="profileStoryRingBtn"><span class="profileStoryRing">${ui.avatar(u,"sm")}</span></div>
+<div class="optionMain"><b>Stories</b><span>${stories.length} ${stories.length===1?"story":"stories"}</span></div>
+›
+</button>
+
+<div class="profileGrid">
+
+${stories.map(s=>
+s.media
+?(s.mediaType==="video"
+?`<video
+src="${NOVA.esc(s.media)}"
+muted playsinline></video>`
+:`<img src="${NOVA.esc(s.media)}">`)
+:""
+).join("")}
+
+</div>
+
+</div>
+
+`
+:""}
+
+${posts.map(p=>modules.posts.card(p)).join("")
+||`<div class="empty">
+<b>Nothing here</b>
+Content will appear here.
+</div>`}
+
+`
+},
+
+edit(){
+
+let u=modules.db.me();
+
+NOVA.modal("Edit profile",`
+
+<div class="form">
+
+<input id="editName"
+value="${NOVA.esc(u.name)}">
+
+<input id="editHandle"
+value="${NOVA.esc(u.handle)}">
+
+<textarea id="editBio"
+rows="4">${NOVA.esc(u.bio)}</textarea>
+
+<input id="editAvatar"
+type="file"
+accept="image/*">
+
+<img id="editPreview"
+class="preview">
+
+<button class="btn full"
+data-profile-save>
+Save
+</button>
+
+</div>`);
+
+$("editAvatar").onchange=async e=>{
+
+let x=await NOVA.image(e.target.files[0]);
+
+$("editPreview").src=x;
+$("editPreview").dataset.data=x;
+$("editPreview").style.display=x?"block":"none"
+
+}
+},
+
+save(){
+
+let u=modules.db.me();
+
+u.name=$("editName").value.trim()||u.name;
+u.handle=$("editHandle").value.trim()||u.handle;
+
+if(!u.handle.startsWith("@"))
+u.handle="@"+u.handle;
+
+u.bio=$("editBio").value.trim();
+
+if($("editPreview").dataset.data)
+u.avatar=$("editPreview").dataset.data;
+
+modules.db.save();
+
+NOVA.closeModal();
+this.render();
+NOVA.toast("Profile updated")
+},
+
+showUser(id){
+
+NOVA.state.chatProfile=id;
+
+NOVA.go("profile");
+
+this.renderUser(id,false)
+}
+};
+
+modules.messages={
+
+render(){
+
+/* normal inbox = normal app */
+if(!NOVA.state.activeChat){
+document.body.classList.remove("chat-open")
+}
+
+if(NOVA.state.chatProfile){
+this.profileInChat(NOVA.state.chatProfile);
+return
+}
+
+if(NOVA.state.activeChat){
+this.chat(NOVA.state.activeChat);
+return
+}
+
+let d=modules.db;
+let me=d.me();
+
+let users=(Array.isArray(d.users)?d.users:[]).filter(u=>u.id!==me.id);
+
+users.sort((a,b)=>{
+  const la=d.chat(me.id,a.id).at(-1)?.time||0;
+  const lb=d.chat(me.id,b.id).at(-1)?.time||0;
+  return lb-la;
+});
+
+$("messages").innerHTML=`
+
+<div class="title">Messages</div>
+
+<div class="card">
+
+${users.map(u=>{
+
+let arr=d.chat(me.id,u.id);
+let last=arr.at(-1);
+let unread=arr.filter(m=>m.from===u.id && !m.read).length;
+
+return`<button
+class="chatRow"
+data-chat="${u.id}">
+
+${ui.avatar(u)}
+
+<div class="chatMain">
+
+<b>${ui.name(u)}</b>
+
+<div>
+${NOVA.esc(
+last?.text||
+this.preview(last)||
+"Start a conversation"
+)}
+</div>
+
+</div>
+
+<div class="time">
+${last?NOVA.time(last.time):""}
+${unread?`<span class="notifBadge" style="position:static;margin-top:5px">${unread>99?"99+":unread}</span>`:""}
+</div>
+
+</button>`
+
+}).join("")}
+
+</div>`
+},
+
+preview(m){
+
+if(!m)return"";
+
+if(m.kind==="image")return"Photo";
+if(m.kind==="video")return"Video";
+if(m.kind==="voice")return"Voice message";
+
+return m.text||""
+},
+
+chat(id){
+
+document.body.classList.add("chat-open");
+
+let d=modules.db;
+let u=d.user(id);
+let me=d.me().id;
+
+let arr=d.chat(me,id);
+let hadUnread=arr.some(m=>m.from===id&&!m.read);
+arr.forEach(m=>{if(m.from===id)m.read=true});
+
+let key=d.chatKey(me,id);
+if(hadUnread){d.saveChatCloud(key);d.updateNotificationBadge();}
+
+let theme=NOVA.state.chatTheme[key]||"dark";
+
+$("messages").innerHTML=`
+
+<div class="chat">
+
+<div class="chatHead">
+
+<button class="circle"
+data-chat-back>
+
+<svg class="svg"
+viewBox="0 0 24 24"
+fill="none"
+stroke="currentColor"
+stroke-width="2">
+
+<path d="m15 18-6-6 6-6"/>
+
+</svg>
+
+</button>
+
+<button class="row"
+style="flex:1;text-align:left"
+data-chat-profile="${id}">
+
+${ui.avatar(u,"sm")}
+
+<div>
+
+<b>${ui.name(u)}</b>
+
+<div class="handle">
+
+${u.online
+?'<span class="onlineDot"></span> online'
+:"offline"}
+
+</div>
+
+</div>
+
+</button>
+
+<button class="circle"
+data-chat-theme="${id}">
+
+<svg class="svg"
+viewBox="0 0 24 24"
+fill="none"
+stroke="currentColor"
+stroke-width="2">
+
+<circle cx="12" cy="12" r="9"/>
+<path d="M8 14s1.5 2 4 2 4-2 4-2M8 9h.01M16 9h.01"/>
+
+</svg>
+
+</button>
+
+</div>
+
+<div id="chatMessages"
+class="chatMessages theme-${theme?.type||theme}">
+
+${arr.map(m=>this.message(m,id)).join("")}
+
+</div>
+
+<div id="typingStatus" class="typingStatus"></div>
+
+<div class="chatInputArea">
+
+<div class="replyBar ${NOVA.state.replyTo?"open":""}"
+id="replyBar">
+
+<div class="replyBarText">
+
+${NOVA.state.replyTo
+?NOVA.esc(this.replyText(NOVA.state.replyTo))
+:""}
+
+</div>
+
+<button class="replyClose"
+data-clear-reply>
+×
+</button>
+
+</div>
+
+<div class="chatInput">
+
+<div class="chatInputWrap">
+
+<div class="attachMenu"
+id="attachMenu">
+
+<button class="attachItem"
+data-attach="photo">
+Photo
+</button>
+
+<button class="attachItem"
+data-attach="video">
+Video
+</button>
+
+<button class="attachItem"
+data-attach="voice">
+Voice
+</button>
+
+</div>
+
+<button class="iconBtn"
+data-attach-open>
+
+<svg class="svg"
+viewBox="0 0 24 24"
+fill="none"
+stroke="currentColor"
+stroke-width="2">
+
+<path d="M12 5v14M5 12h14"/>
+
+</svg>
+
+</button>
+
+</div>
+
+<input id="messageInput"
+placeholder="Message..."
+autocomplete="off">
+
+<button class="iconBtn"
+id="voiceBtn"
+data-record>
+
+<svg class="svg"
+viewBox="0 0 24 24"
+fill="none"
+stroke="currentColor"
+stroke-width="2">
+
+<path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3Z"/>
+<path d="M19 11a7 7 0 0 1-14 0M12 18v3M9 21h6"/>
+
+</svg>
+
+</button>
+
+<button class="iconBtn"
+data-send-message="${id}">
+
+${ICONS.send}
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+`;
+
+this.applyTheme(id);
+const typingOther=!!(d.chatMeta?.[key]?.typing?.[id]);
+const ts=$("typingStatus");
+if(ts)ts.textContent=typingOther?`${u?.name||"User"} is typing…`:"";
+this.scroll()
+},
+
+/* =========================================================
+   NEW MESSAGE RENDERER
+   Text = bubble
+   Image/video = NO bubble
+   ========================================================= */
+
+message(m,id){
+
+let me=modules.db.me().id;
+let isMe=m.from===me;
+
+let quote=m.replyTo
+?this.replyObject(m.replyTo)
+:null;
+
+let inner="";
+
+if(quote){
+
+inner+=`
+<div class="replyQuote">
+${NOVA.esc(
+quote.text||
+this.preview(quote)||
+"Message"
+)}
+</div>`
+}
+
+if(m.deleted){
+
+return`<div
+class="bubbleWrap ${isMe?"me":"them"}"
+data-message-wrap="${m.id}"
+data-message-id="${m.id}"
+data-from="${m.from}">
+
+<div class="bubble ${isMe?"me":"them"} deleted"
+data-message="${m.id}">
+
+Message deleted
+
+<div class="msgTime">
+${NOVA.time(m.time)}
+</div>
+
+</div>
+
+</div>`
+}
+
+/* PHOTO */
+if(m.kind==="image"){
+
+let myReaction=m.reactionBy?.[me]||null;
+
+return`<div
+class="bubbleWrap ${isMe?"me":"them"}"
+data-message-wrap="${m.id}"
+data-message-id="${m.id}"
+data-from="${m.from}">
+
+<div class="mediaMessage"
+data-message="${m.id}">
+
+${quote?quoteHTML(quote,this.preview.bind(this)):''}
+
+<img
+class="chatMedia"
+src="${NOVA.esc(m.data)}"
+alt="Photo"
+draggable="false">
+
+<div class="mediaTime">
+${NOVA.time(m.time)}
+</div>
+
+${myReaction
+?`<div class="msgReaction">
+${ui.reaction(myReaction)}
+</div>`
+:""}
+
+</div>
+
+</div>`
+}
+
+/* VIDEO */
+if(m.kind==="video"){
+
+let myReaction=m.reactionBy?.[me]||null;
+
+return`<div
+class="bubbleWrap ${isMe?"me":"them"}"
+data-message-wrap="${m.id}"
+data-message-id="${m.id}"
+data-from="${m.from}">
+
+<div class="mediaMessage"
+data-message="${m.id}">
+
+${quote?quoteHTML(quote,this.preview.bind(this)):''}
+
+<video
+class="chatMediaVideo"
+src="${NOVA.esc(m.data)}"
+controls
+playsinline
+preload="metadata">
+</video>
+
+<div class="mediaTime">
+${NOVA.time(m.time)}
+</div>
+
+${myReaction
+?`<div class="msgReaction">
+${ui.reaction(myReaction)}
+</div>`
+:""}
+
+</div>
+
+</div>`
+}
+
+/* VOICE / TEXT */
+if(m.kind==="voice"){
+inner+=this.voice(m)
+}else{
+inner+=`<div>${NOVA.esc(m.text||"")}</div>`
+}
+
+let myReaction=
+m.reactionBy?.[me]||null;
+
+return`<div
+class="bubbleWrap ${isMe?"me":"them"}"
+data-message-wrap="${m.id}"
+data-message-id="${m.id}"
+data-from="${m.from}">
+
+<div class="bubble ${isMe?"me":"them"}"
+data-message="${m.id}">
+
+${inner}
+
+<div class="msgTime">
+${NOVA.time(m.time)}
+</div>
+
+${myReaction
+?`<div class="msgReaction">
+${ui.reaction(myReaction)}
+</div>`
+:""}
+
+</div>
+
+</div>`
+},
+
+voice(m){
+
+let liked=(m.voiceLiked||[])
+.includes(modules.db.me().id);
+
+return`<div class="voice"
+data-voice="${m.id}">
+
+<button class="voicePlay"
+data-voice-play="${m.id}">
+${ICONS.play}
+</button>
+
+<div class="wave">
+
+${Array.from(
+{length:28},
+(_,i)=>`<i style="height:${6+(i%7)*3}px"></i>`
+).join("")}
+
+</div>
+
+<button class="voiceLike ${liked?"active":""}"
+data-voice-like="${m.id}">
+${ICONS.heart}
+</button>
+
+<audio
+id="audio_${m.id}"
+src="${NOVA.esc(m.data)}"
+preload="metadata">
+</audio>
+
+</div>`
+},
+
+replyObject(id){
+
+return modules.db
+.chat(
+modules.db.me().id,
+NOVA.state.activeChat
+)
+.find(x=>x.id===id)||{}
+},
+
+replyText(id){
+
+let x=this.replyObject(id);
+
+return x.text||
+this.preview(x)||
+"Message"
+},
+
+scroll(){
+
+setTimeout(()=>{
+
+let x=$("chatMessages");
+
+if(x)
+x.scrollTop=x.scrollHeight
+
+},30)
+},
+
+send(id){
+
+let input=$("messageInput");
+
+if(!input)return;
+
+let text=input.value.trim();
+
+if(!text)return;
+
+let d=modules.db;
+let me=d.me().id;
+
+let msg=d.sendMessage(
+id,
+{
+kind:"text",
+text,
+replyTo:NOVA.state.replyTo||null
+}
+);
+
+if(!msg)
+return NOVA.toast("Message could not be sent");
+
+msg.read=false;
+if(msg.cloudPromise)msg.cloudPromise.then(ok=>{if(!ok)NOVA.toast("Message failed to reach cloud")});
+
+NOVA.state.replyTo=null;
+
+input.value="";
+try{
+  const key=d.chatKey(me,id);
+  window.NOVA_BACKEND?.db?.collection("chats").doc(key).set({typing:{[me]:false},updated:Date.now()},{merge:true}).catch(()=>{});
+}catch(_){}
+
+this.chat(id);
+
+NOVA.toast("Sent ✓");
+},
+
+async media(id,type){
+
+let input=document.createElement("input");
+
+input.type="file";
+input.accept=type==="image"
+?"image/*"
+:"video/*";
+
+input.onchange=async()=>{
+
+let f=input.files[0];
+
+if(!f)return;
+
+let data=await NOVA.image(f);
+
+let msg=modules.db.sendMessage(
+id,
+{
+kind:type,
+data,
+name:f.name
+}
+);
+
+if(msg){
+
+this.chat(id);
+
+NOVA.toast(type==="image"?"Photo sent":"Video sent")
+}
+
+};
+
+input.click()
+},
+
+async record(id){
+if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder)return NOVA.toast("Voice recording is not supported in this browser");
+if(NOVA.recording)return;
+try{
+const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+const chunks=[];
+let mime="";
+if(MediaRecorder.isTypeSupported("audio/webm;codecs=opus"))mime="audio/webm;codecs=opus";
+else if(MediaRecorder.isTypeSupported("audio/webm"))mime="audio/webm";
+const rec=mime?new MediaRecorder(stream,{mimeType:mime}):new MediaRecorder(stream);
+NOVA.recording=rec; NOVA.recordingStarted=Date.now();
+const btn=$("voiceBtn"); btn?.classList.add("recording");
+rec.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};
+rec.onstop=async()=>{
+stream.getTracks().forEach(t=>t.stop());
+const duration=Math.max(1,Math.round((Date.now()-NOVA.recordingStarted)/1000));
+const blob=new Blob(chunks,{type:rec.mimeType||"audio/webm"});
+try{
+const audioFile=new File([blob],`voice-${Date.now()}.webm`,{type:blob.type||"audio/webm"});
+const data=await uploadFile(audioFile,`nova/chats/${modules.db.me().id}`);
+if(!data)throw new Error("Voice upload failed");
+const msg=modules.db.sendMessage(id,{kind:"voice",data,duration,voiceLiked:[]});
+NOVA.recording=null; btn?.classList.remove("recording");
+if(msg){ this.chat(id); NOVA.toast("Voice sent") }
+}catch(err){NOVA.recording=null;btn?.classList.remove("recording");NOVA.toast("Voice upload failed")}
+};
+rec.start();
+NOVA.toast("Recording… release to send");
+}catch(e){NOVA.recording=null;$("voiceBtn")?.classList.remove("recording");NOVA.toast("Microphone permission is needed")}
+},
+
+stopRecord(){
+
+if(NOVA.recording){
+
+try{
+NOVA.recording.stop()
+}catch(e){}
+
+$("voiceBtn")?.classList.remove("recording")
+}
+},
+
+profileInChat(id){
+
+modules.profile.showUser(id)
+},
+
+theme(id){
+
+let d=modules.db;
+let key=d.chatKey(d.me().id,id);
+let cur=NOVA.state.chatTheme[key]||"dark";
+
+NOVA.modal("Chat theme",`
+
+<div class="card">
+
+<div class="option"
+data-theme-choice="dark"
+data-chat-id="${id}">
+
+<div class="icon">◐</div>
+
+<div class="optionMain">
+<b>Dark</b>
+<span>Clean NOVA dark theme</span>
+</div>
+
+</div>
+
+<div class="option"
+data-theme-choice="purple"
+data-chat-id="${id}">
+
+<div class="icon">✦</div>
+
+<div class="optionMain">
+<b>Purple</b>
+<span>Soft purple gradient</span>
+</div>
+
+</div>
+
+<div class="option"
+data-theme-choice="blue"
+data-chat-id="${id}">
+
+<div class="icon">○</div>
+
+<div class="optionMain">
+<b>Ocean</b>
+<span>Blue chat background</span>
+</div>
+
+</div>
+
+<div class="option"
+data-theme-choice="light"
+data-chat-id="${id}">
+
+<div class="icon">☼</div>
+
+<div class="optionMain">
+<b>Light</b>
+<span>Bright Messenger-style chat</span>
+</div>
+
+</div>
+
+<div class="option"
+data-theme-choice="gallery"
+data-chat-id="${id}">
+
+<div class="icon">□</div>
+
+<div class="optionMain">
+<b>Gallery background</b>
+<span>Choose a photo from Gallery</span>
+</div>
+
+</div>
+
+</div>`)
+},
+
+setTheme(id,type){
+
+let d=modules.db;
+let key=d.chatKey(d.me().id,id);
+
+if(type==="gallery"){
+
+let input=document.createElement("input");
+
+input.type="file";
+input.accept="image/*";
+
+input.onchange=async()=>{
+
+let f=input.files[0];
+
+if(!f)return;
+
+let data=await NOVA.image(f);
+
+NOVA.state.chatTheme[key]={
+type:"gallery",
+bg:data
+};
+
+d.save();
+
+NOVA.closeModal();
+
+this.chat(id)
+
+};
+
+input.click();
+
+return
+}
+
+NOVA.state.chatTheme[key]={
+type
+};
+
+d.save();
+
+NOVA.closeModal();
+
+this.chat(id)
+},
+
+applyTheme(id){
+
+let d=modules.db;
+let key=d.chatKey(d.me().id,id);
+let theme=NOVA.state.chatTheme[key];
+let box=$("chatMessages");
+
+if(!box)return;
+
+if(theme?.type==="gallery"){
+
+box.className="chatMessages hasBg";
+
+box.style.backgroundImage=
+`linear-gradient(#0004,#0004),url("${theme.bg}")`;
+
+}else{
+
+box.className=
+"chatMessages theme-"+(theme?.type||"dark");
+
+box.style.backgroundImage="";
+}
+
+}
+};
+
+/* Helper for reply quote in media */
+function quoteHTML(q,previewFn){
+return`
+<div class="replyQuote">
+${NOVA.esc(
+q.text||
+previewFn(q)||
+"Message"
+)}
+</div>`
+}
+
+modules.notifications={
+
+show(){
+  let d=modules.db;
+  const list=(Array.isArray(d.notifications)?d.notifications:[]).slice().sort((a,b)=>(b.time||0)-(a.time||0));
+  const rows=list.map(n=>{
+    const u=d.user(n.user);
+    let label=n.text||"Activity";
+    let action=n.type||"";
+    if(n.type==="message") label=`${u?.name||"Someone"} sent you a message`;
+    if(n.type==="like") label=`${u?.name||"Someone"} liked your post`;
+    if(n.type==="comment") label=`${u?.name||"Someone"} commented on your post`;
+    if(n.type==="reaction") label=`${u?.name||"Someone"} reacted to your post`;
+    if(n.type==="story_reaction") label=`${u?.name||"Someone"} reacted to your story`;
+    if(n.type==="story_reply") label=`${u?.name||"Someone"} replied to your story`;
+    if(n.type==="message_reaction") label=`${u?.name||"Someone"} reacted to your message`;
+    return `<button class="notificationRow" data-notif-type="${NOVA.esc(action)}" data-notif-id="${NOVA.esc(n.id)}" data-chat="${NOVA.esc(n.chat||"")}" data-post="${NOVA.esc(n.postId||"")}" data-story="${NOVA.esc(n.storyId||"")}">
+      ${ui.avatar(u,"sm")}
+      <div class="notificationBody"><b>${NOVA.esc(label)}</b><span>${NOVA.time(n.time)}</span></div>
+      <span class="notificationArrow">›</span>
+    </button>`;
+  }).join("");
+  NOVA.modal("Notifications",rows?`<div class="notificationList">${rows}</div>`:`<div class="empty"><b>No notifications</b><br>You are all caught up.</div>`);
+  d.notifications.forEach(n=>n.read=true);
+  d.updateNotificationBadge();
+  d.save();
+}
+};
+
+
+modules.settings={
+
+render(){
+
+let d=modules.db;
+let s=d.settings;
+
+$("settings").innerHTML=`
+
+<div class="title">Settings</div>
+
+<div class="card">
+
+<div class="option">
+
+<div class="icon">◉</div>
+
+<div class="optionMain">
+<b>Notifications</b>
+<span>Activity alerts</span>
+</div>
+
+<input style="width:22px"
+type="checkbox"
+${s.notifications?"checked":""}
+data-setting="notifications">
+
+</div>
+
+<div class="option">
+
+<div class="icon">●</div>
+
+<div class="optionMain">
+<b>Online status</b>
+<span>Show when you're online</span>
+</div>
+
+<input style="width:22px"
+type="checkbox"
+${s.online?"checked":""}
+data-setting="online">
+
+</div>
+
+<div class="option">
+
+<div class="icon">▶</div>
+
+<div class="optionMain">
+<b>Autoplay</b>
+<span>Play videos automatically</span>
+</div>
+
+<input style="width:22px"
+type="checkbox"
+${s.autoplay?"checked":""}
+data-setting="autoplay">
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="option"
+data-action="editProfile">
+
+<div class="icon">◎</div>
+
+<div class="optionMain">
+<b>Edit profile</b>
+<span>Change your profile</span>
+</div>
+
+›
+
+</div>
+
+<div class="option"
+data-action="switchAccount">
+
+<div class="icon">↻</div>
+
+<div class="optionMain">
+<b>Switch account</b>
+<span>Change NOVA account</span>
+</div>
+
+›
+
+</div>
+
+</div>
+
+${d.isOwner()?`
+<div class="card">
+<div class="option" data-action="ownerVerified">
+<div class="icon">✓</div>
+<div class="optionMain">
+<b>Verified badges</b>
+<span>Give or remove the blue badge</span>
+</div>
+›
+</div>
+</div>
+`:""}
+
+<div class="card">
+
+<div class="option"
+data-action="reset">
+
+<div class="icon">
+${ICONS.trash}
+</div>
+
+<div class="optionMain">
+<b>Reset local NOVA</b>
+<span>Delete local app data</span>
+</div>
+
+›
+
+</div>
+
+</div>
+
+<button class="btn full"
+data-action="logout">
+Log out
+</button>
+`
+}
+};
+
+const auth={
+
+session:null,
+
+
+render(mode="login"){
+
+document.querySelectorAll("[data-auth]")
+.forEach(x=>
+x.classList.toggle(
+"active",
+x.dataset.auth===mode
+)
+);
+
+$("authBody").innerHTML=
+mode==="login"
+?`
+
+<form class="authForm"
+onsubmit="event.preventDefault();auth.login()">
+
+<h2>Welcome back</h2>
+
+<div class="authHelp">
+Use the same email and password.
+No verification code is required.
+</div>
+
+<input id="loginEmail"
+autocomplete="username"
+placeholder="Email / NOVA email">
+
+<input id="loginPass"
+type="password"
+autocomplete="current-password"
+placeholder="Password">
+
+<div id="authError"
+class="authError"></div>
+
+<button class="btn full">
+Log in
+</button>
+
+<button type="button"
+class="btn secondary full"
+onclick="auth.render('register')">
+Create account
+</button>
+
+</form>`
+
+:`
+
+<form class="authForm"
+onsubmit="event.preventDefault();auth.register()">
+
+<h2>Create account</h2>
+
+<div class="authHelp">
+You can use an invented email-like address.
+NOVA does not send verification codes.
+</div>
+
+<input id="regName"
+placeholder="Your name">
+
+<input id="regHandle"
+placeholder="Username (optional)">
+
+<input id="regEmail"
+autocomplete="username"
+placeholder="Email e.g. carlos@nova.local">
+
+<input id="regPass"
+type="password"
+autocomplete="new-password"
+placeholder="Password">
+
+<input id="regPass2"
+type="password"
+autocomplete="new-password"
+placeholder="Repeat password">
+
+<input id="regOwnerId"
+autocomplete="off"
+placeholder="Owner ID (optional)"
+>
+
+<div class="authHelp" style="margin-top:-6px">
+Leave Owner ID empty for a normal account. Only the private NOVA Owner ID activates the Owner account and verified badge.
+</div>
+
+<div id="authError"
+class="authError"></div>
+
+<button class="btn full">
+Create account
+</button>
+
+<button type="button"
+class="btn secondary full"
+onclick="auth.render('login')">
+I already have an account
+</button>
+
+</form>`
+},
+
+show(){
+this.render("login");
+$("auth").style.display="block"
+},
+
+hide(){
+$("auth").style.display="none"
+},
+
+logout(){
+
+let u=modules.db.me();
+
+if(u){
+u.online=false;
+modules.db.save();
+try{
+  const fu=window.NOVA_BACKEND?.auth?.currentUser;
+  if(fu)window.NOVA_BACKEND.db.collection("users").doc(u.id).set(
+    {online:false,lastSeen:Date.now()},{merge:true}
+  );
+}catch(e){}
+}
+
+this.session=null;
+
+NOVA.set("session",null);
+
+this.show()
+},
+
+switch(){
+this.show()
+}
+};
+
+
+/* =========================================================
+   NOVA ONLINE BACKEND
+   Keeps the existing NOVA UI/modules and replaces only the
+   local demo storage/auth with Supabase + Supabase Storage.
+   ========================================================= */
+(function(){
+  const F=window.NOVA_BACKEND;
+  if(!F||!F.auth||!F.db){
+    console.error("NOVA Supabase is not available.");
+    return;
+  }
+
+  const fAuth=F.auth, fdb=F.db;
+  window.NOVA_ONLINE_READY=false;
+  window.NOVA_ONLINE_ERROR="";
+
+  const clean=o=>{
+    const x={...(o||{})};
+    delete x.__docId;
+    delete x.cloudPromise;
+    return x;
+  };
+
+  const userDoc=uid=>fdb.collection("users").doc(uid);
+  const notifDoc=uid=>fdb.collection("notifications").doc(uid);
+  const settingsDoc=uid=>fdb.collection("settings").doc(uid);
+  const chatDoc=(a,b)=>fdb.collection("chats").doc([a,b].sort().join("__"));
+
+  async function uploadFile(file,folder){
+    if(!file)return "";
+    const data=await NOVA_UPLOAD_TO_STORAGE(file,{folder});
+    return data.secure_url||data.url||"";
+  }
+
+  async function ensureProfile(fu, fallback={}){
+    if(!fu) return null;
+    const ref=userDoc(fu.uid);
+    const snap=await ref.get();
+    if(snap.exists) return {id:fu.uid,...snap.data()};
+
+    const name=(fallback.name||fu.displayName||"NOVA User").trim();
+    const handle=fallback.handle||("@"+name.toLowerCase().replace(/[^a-z0-9]/g,"").slice(0,14)+Math.floor(Math.random()*90+10));
+    const profile={
+      id:fu.uid,
+      name:name||"NOVA User",
+      handle:handle.startsWith("@")?handle:"@"+handle,
+      bio:fallback.bio||"New on NOVA 🚀",
+      avatar:fallback.avatar||"",
+      followers:0,
+      following:0,
+      followingUsers:[],
+      online:true,
+      verified:false,
+      created:Date.now()
+    };
+    await ref.set(clean(profile),{merge:true});
+    return profile;
+  }
+
+  modules.db.init=async function(){
+    this.users=[];
+    this.posts=[];
+    this.stories=[];
+    this.messages=[];
+    this.notifications=[];
+    this.settings={
+      notifications:true,
+      online:true,
+      autoplay:true,
+      theme:"dark"
+    };
+    this.chats={};
+    this.chatMeta={};
+
+    const [us,ps,ss]=await Promise.all([
+      fdb.collection("users").get(),
+      fdb.collection("posts").get(),
+      fdb.collection("stories").get()
+    ]);
+
+    this.users=us.docs.map(d=>({id:d.id,...d.data()}));
+    try{
+      const ownerSnap=await fdb.collection("config").doc("owner").get();
+      window.NOVA_OWNER_UID=ownerSnap.exists?(ownerSnap.data().ownerUid||""):"";
+    }catch(e){window.NOVA_OWNER_UID="";}
+    this.posts=ps.docs.map(d=>({__docId:d.id,...d.data()}));
+    this.stories=ss.docs.map(d=>({__docId:d.id,...d.data()}));
+
+    this.posts.forEach(p=>{
+      p.likes??=[];
+      p.comments??=[];
+      p.reactions??={};
+      p.savedBy??=[];
+      p.reposts??=0;
+    });
+    this.stories.forEach(s=>{
+      s.reactions??={};
+      s.replies??=[];
+    });
+
+        const fu=fAuth.currentUser;
+    if(fu){
+      await ensureProfile(fu);
+      await this.loadPrivate(fu.uid);
+      this.startRealtime(fu.uid);
+    }
+    window.NOVA_ONLINE_READY=true;
+  };
+
+  modules.db.loadPrivate=async function(uid){
+    const [ns,st,cs]=await Promise.all([
+      notifDoc(uid).get(),
+      settingsDoc(uid).get(),
+      fdb.collection("chats").where("participants","array-contains",uid).get()
+    ]);
+
+    this.notifications=ns.exists?(ns.data().items||[]):[];
+    this.updateNotificationBadge();
+    this.settings=st.exists?{
+      notifications:true,online:true,autoplay:true,theme:"dark",
+      ...(st.data()||{})
+    }:{
+      notifications:true,online:true,autoplay:true,theme:"dark"
+    };
+
+    this.chats={};
+    this.chatMeta={};
+    cs.docs.forEach(d=>{
+      const x=d.data()||{};
+      const participants=x.participants||d.id.split("__");
+      if(participants.length>=2){
+        const key=this.chatKey(participants[0],participants[1]);
+        this.chats[key]=Array.isArray(x.messages)?x.messages:[];
+        this.chatMeta[key]=x;
+        this.chats[key].forEach(m=>m.reactionBy??={});
+      }
+    });
+  };
+
+  /* REALTIME SYNC — Firestore listeners keep NOVA live without refresh. */
+  let realtimeUnsubs=[];
+  let realtimeRenderTimer=null;
+  const scheduleRealtimeRender=()=>{
+    clearTimeout(realtimeRenderTimer);
+    realtimeRenderTimer=setTimeout(()=>{
+      try{
+        if(!auth.session || !modules.db.me())return;
+        modules.db.updateNotificationBadge();
+        if($("modalBg")?.classList.contains("open") || $("viewer")?.classList.contains("open"))return;
+        const active=document.activeElement;
+        if(active?.id==="messageInput" || active?.id==="commentInput")return;
+        const screen=NOVA.state?.screen||"home";
+        NOVA.render(screen);
+      }catch(e){ console.error("NOVA realtime render failed:",e); }
+    },120);
+  };
+
+  modules.db.stopRealtime=function(){
+    realtimeUnsubs.forEach(fn=>{try{fn()}catch(e){}});
+    realtimeUnsubs=[];
+  };
+
+  modules.db.startRealtime=function(uid){
+    this.stopRealtime();
+    if(!uid)return;
+
+    const watch=(query,apply)=>{
+      const unsub=query.onSnapshot(snap=>{
+        try{ apply(snap); scheduleRealtimeRender(); }
+        catch(e){ console.error("NOVA realtime update failed:",e); }
+      },err=>console.error("NOVA realtime listener error:",err));
+      realtimeUnsubs.push(unsub);
+    };
+
+    watch(fdb.collection("users"),snap=>{
+      this.users=snap.docs.map(d=>({id:d.id,...d.data()}));
+    });
+
+    watch(fdb.collection("config").doc("owner"),snap=>{
+      window.NOVA_OWNER_UID=snap.exists?(snap.data().ownerUid||""):"";
+    });
+
+    watch(fdb.collection("posts"),snap=>{
+      this.posts=snap.docs.map(d=>({__docId:d.id,...d.data()}));
+      this.posts.forEach(p=>{
+        p.likes??=[]; p.comments??=[]; p.reactions??={};
+        p.savedBy??=[]; p.reposts??=0;
+      });
+    });
+
+    watch(fdb.collection("stories"),snap=>{
+      this.stories=snap.docs.map(d=>({__docId:d.id,...d.data()}));
+      this.stories.forEach(st=>{st.reactions??={};st.replies??=[];});
+    });
+
+    watch(notifDoc(uid),snap=>{
+      this.notifications=snap.exists?(snap.data().items||[]):[];
+      this.updateNotificationBadge();
+    });
+
+    watch(settingsDoc(uid),snap=>{
+      this.settings={notifications:true,online:true,autoplay:true,theme:"dark",...(snap.exists?snap.data():{})};
+    });
+
+    watch(fdb.collection("chats").where("participants","array-contains",uid),snap=>{
+      const activeKey=NOVA.state.activeChat?this.chatKey(uid,NOVA.state.activeChat):"";
+      let activeTyping=false;
+      let activeOther="";
+      this.chats={};
+      this.chatMeta={};
+      snap.docs.forEach(d=>{
+        const x=d.data()||{};
+        const participants=x.participants||d.id.split("__");
+        if(participants.length>=2){
+          const key=this.chatKey(participants[0],participants[1]);
+          const remoteMessages=Array.isArray(x.messages)?x.messages:[];
+          const pending=this._chatPending?.[key]||[];
+          const merged=new Map(remoteMessages.map(m=>[m.id,m]));
+          pending.forEach(m=>merged.set(m.id,m));
+          this.chats[key]=[...merged.values()].sort((a,b)=>(a.time||0)-(b.time||0));
+          this.chatMeta[key]=x;
+          this.chats[key].forEach(m=>m.reactionBy??={});
+          if(key===activeKey){
+            activeOther=participants.find(v=>v!==uid)||"";
+            activeTyping=!!x.typing?.[activeOther];
+          }
+        }
+      });
+      if(activeKey && $("chatMessages")){
+        const input=$("messageInput");
+        const hadFocus=document.activeElement===input;
+        const caret=input?input.selectionStart:null;
+        const val=input?.value||"";
+        const key=activeKey;
+        const arr=this.chats[key]||[];
+        $("chatMessages").innerHTML=arr.map(m=>modules.messages.message(m,NOVA.state.activeChat)).join("");
+        const ts=$("typingStatus");
+        if(ts)ts.textContent=activeTyping?`${this.user(activeOther)?.name||"User"} is typing…`:"";
+        modules.messages.scroll();
+        if(input){
+          input.value=val;
+          if(hadFocus){input.focus({preventScroll:true});if(caret!=null)try{input.setSelectionRange(caret,caret)}catch(e){}}
+        }
+      }
+    });
+  };
+
+  modules.db.save=async function(){
+    const me=this.me();
+    if(!me||!fAuth.currentUser)return false;
+    try{
+      const batch=fdb.batch();
+      batch.set(userDoc(me.id),clean(me),{merge:true});
+      batch.set(notifDoc(me.id),{items:(this.notifications||[]).slice(0,100),updated:Date.now()},{merge:true});
+      batch.set(settingsDoc(me.id),clean(this.settings||{}),{merge:true});
+      await batch.commit();
+      this.updateNotificationBadge();
+      return true;
+    }catch(err){
+      console.error("NOVA private cloud save failed:",err);
+      window.NOVA_ONLINE_ERROR=err?.message||String(err);
+      return false;
+    }
+  };
+
+  modules.db.savePublic=async function(){
+    const me=this.me();
+    if(!me)return false;
+    const ownedPosts=(this.posts||[]).filter(p=>p.user===me.id);
+    const ownedStories=(this.stories||[]).filter(st=>st.user===me.id);
+    try{
+      await Promise.all([
+        ...ownedPosts.map(p=>fdb.collection("posts").doc(p.id).set(clean(p),{merge:true})),
+        ...ownedStories.map(st=>fdb.collection("stories").doc(st.id).set(clean(st),{merge:true}))
+      ]);
+      return true;
+    }catch(e){console.error(e);return false;}
+  };
+
+  modules.db.savePostCloud=async function(id){
+    if(!id||!fAuth.currentUser)return false;
+    const p=this.post(id);
+    if(!p)return false;
+    try{
+      await fdb.collection("posts").doc(id).set(clean(p),{merge:true});
+      return true;
+    }catch(e){
+      console.error("NOVA post cloud save failed:",e);
+      return false;
+    }
+  };
+
+  modules.db.saveStoryCloud=async function(id){
+    if(!id||!fAuth.currentUser)return false;
+    const s=this.stories.find(x=>x.id===id);
+    if(!s)return false;
+    try{
+      await fdb.collection("stories").doc(id).set(clean(s),{merge:true});
+      return true;
+    }catch(e){
+      console.error("NOVA story cloud save failed:",e);
+      return false;
+    }
+  };
+
+  modules.db.postLikeCloud=async function(id,liked){
+    const uid=fAuth.currentUser?.uid; if(!uid)return false;
+    const pref=fdb.collection("posts").doc(id);
+    try{
+      await fdb.runTransaction(async tx=>{
+        const snap=await tx.get(pref);
+        if(!snap.exists)throw new Error("Post not found");
+        const p=snap.data()||{};
+        let likes=Array.isArray(p.likes)?p.likes.filter(x=>x!==uid):[];
+        if(liked)likes.push(uid);
+        tx.update(pref,{likes:[...new Set(likes)]});
+      });
+      return true;
+    }catch(e){console.error(e);return false;}
+  };
+
+  modules.db.postSaveCloud=async function(id,saved){
+    const uid=fAuth.currentUser?.uid; if(!uid)return false;
+    const pref=fdb.collection("posts").doc(id);
+    try{
+      await fdb.runTransaction(async tx=>{
+        const snap=await tx.get(pref); if(!snap.exists)throw new Error("Post not found");
+        const p=snap.data()||{};
+        let list=Array.isArray(p.savedBy)?p.savedBy.filter(x=>x!==uid):[];
+        if(saved)list.push(uid);
+        tx.update(pref,{savedBy:[...new Set(list)]});
+      });
+      return true;
+    }catch(e){console.error(e);return false;}
+  };
+
+  modules.db.postReactionCloud=async function(id,type){
+    const uid=fAuth.currentUser?.uid; if(!uid)return false;
+    const pref=fdb.collection("posts").doc(id);
+    try{
+      await fdb.runTransaction(async tx=>{
+        const snap=await tx.get(pref); if(!snap.exists)throw new Error("Post not found");
+        const p=snap.data()||{}; const reactions={...(p.reactions||{})};
+        Object.keys(reactions).forEach(k=>{reactions[k]=(reactions[k]||[]).filter(x=>x!==uid);});
+        if(type)reactions[type]=[...(reactions[type]||[]),uid];
+        tx.update(pref,{reactions});
+      });
+      return true;
+    }catch(e){console.error(e);return false;}
+  };
+
+  modules.db.postCommentCloud=async function(id,comment){
+    const uid=fAuth.currentUser?.uid; if(!uid||!comment)return false;
+    const pref=fdb.collection("posts").doc(id);
+    try{
+      await fdb.runTransaction(async tx=>{
+        const snap=await tx.get(pref); if(!snap.exists)throw new Error("Post not found");
+        const p=snap.data()||{};
+        const comments=Array.isArray(p.comments)?p.comments:[];
+        if(!comments.some(x=>x.id===comment.id))comments.push(clean(comment));
+        tx.update(pref,{comments});
+      });
+      return true;
+    }catch(e){console.error(e);return false;}
+  };
+
+  modules.db.deletePostCloud=async function(id){
+    try{
+      const p=this.post(id);
+      if(p && p.user!==this.me()?.id && !this.isOwner())return false;
+      await fdb.collection("posts").doc(id).delete();
+      this.posts=(this.posts||[]).filter(x=>x.id!==id);
+      return true;
+    }catch(e){
+      console.error(e);
+      NOVA.toast("Could not delete post: "+(e?.message||"Supabase error"));
+      return false;
+    }
+  };
+
+  modules.db.deleteStoryCloud=async function(id,storyOverride){
+    try{
+      const s=storyOverride||this.stories.find(x=>x.id===id);
+      if(s && s.user!==this.me()?.id && !this.isOwner())return false;
+      await fdb.collection("stories").doc(id).delete();
+      this.stories=(this.stories||[]).filter(x=>x.id!==id);
+      return true;
+    }catch(e){
+      console.error("NOVA story delete failed:",e);
+      NOVA.toast("Could not delete story: "+(e?.message||"Supabase error"));
+      return false;
+    }
+  };
+
+  modules.db.setVerified=async function(id,value){
+    if(!this.isOwner())return false;
+    const u=this.user(id);
+    if(!u||u.id===window.NOVA_OWNER_UID)return false;
+    u.verified=!!value;
+    try{
+      await userDoc(id).set({verified:!!value},{merge:true});
+      return true;
+    }catch(e){
+      console.error(e);
+      NOVA.toast("Could not update verification");
+      return false;
+    }
+  };
+
+  /* Registration uses Supabase Authentication; no fake/local accounts. */
+  auth.session=null;
+
+  auth.register=async function(){
+    const n=$("regName").value.trim();
+    const e=$("regEmail").value.trim().toLowerCase();
+    const p=$("regPass").value;
+    const p2=$("regPass2").value;
+    let h=$("regHandle").value.trim();
+    const ownerId=$("regOwnerId").value.trim();
+    const err=$("authBody").querySelector("#authError");
+
+    if(err)err.textContent="";
+    if(n.length<2)return err.textContent="Enter your name.";
+    if(!e.includes("@"))return err.textContent="Enter a valid email.";
+    if(p.length<6)return err.textContent="Password must be at least 6 characters.";
+    if(p!==p2)return err.textContent="Passwords do not match.";
+
+    let isOwner=false;
+    if(ownerId){
+      const hash=await NOVA.hashText(ownerId);
+      if(hash!==NOVA_OWNER_CODE_HASH)return err.textContent="Invalid Owner ID.";
+      isOwner=true;
+    }
+
+    if(!h)h="@"+n.toLowerCase().replace(/[^a-z0-9]/g,"").slice(0,14)+Math.floor(Math.random()*90+10);
+    if(!h.startsWith("@"))h="@"+h;
+
+    const old=fAuth.currentUser;
+    try{
+      const cred=await fAuth.createUserWithEmailAndPassword(e,p);
+      const fu=cred.user;
+
+      await fu.updateProfile({displayName:n});
+
+      const id=fu.uid;
+      const profile={
+        id,
+        name:n,
+        handle:h,
+        bio:"New on NOVA 🚀",
+        avatar:"",
+        followers:0,
+        following:0,
+        followingUsers:[],likedPosts:[],savedPosts:[],postReactions:{},postComments:[],storyReactions:{},
+        online:true,
+        verified:!!isOwner,
+        owner:!!isOwner,
+        created:Date.now()
+      };
+
+      await fdb.collection("users").doc(id).set(profile,{merge:true});
+
+      auth.session={userId:id,email:fu.email||e};
+      modules.db.users=(Array.isArray(modules.db.users)?modules.db.users:[]).filter(x=>x.id!==id);
+      modules.db.users.push(profile);
+      modules.db.posts??=[];
+      modules.db.stories??=[];
+      modules.db.notifications=[];
+      modules.db.settings={notifications:true,online:true,autoplay:true,theme:"dark"};
+      modules.db.chats={};
+
+      auth.hide();
+      NOVA.go("home");
+      NOVA.toast(isOwner?"Owner account created 👑":"Account created 🚀");
+    }catch(ex){
+      console.error(ex);
+      let msg=ex?.code||"";
+      if(msg==="auth/email-already-in-use")msg="Email already exists in Supabase. Delete the old Supabase Authentication account first, then register again.";
+      else if(msg==="auth/invalid-email")msg="Invalid email address.";
+      else if(msg==="auth/weak-password")msg="Password must be at least 6 characters.";
+      else msg=ex?.message||"Account creation failed.";
+      if(err)err.textContent=msg.replace(/^Supabase:\s*/,"");
+    }
+  };
+
+  auth.login=async function(){
+    const e=$("loginEmail").value.trim().toLowerCase();
+    const p=$("loginPass").value;
+    const err=$("authBody").querySelector("#authError");
+    if(err)err.textContent="";
+    if(!e||!p)return err.textContent="Enter email and password.";
+
+    const btn=$("authBody").querySelector("button.btn.full");
+    if(btn){btn.disabled=true;btn.textContent="Logging in…";}
+
+    try{
+      const cred=await fAuth.signInWithEmailAndPassword(e,p);
+      const fu=cred.user;
+      let profile=await ensureProfile(fu);
+      auth.session={userId:profile.id,email:fu.email||e};
+
+      await modules.db.init();
+      const u=modules.db.user(profile.id);
+      if(u){
+        u.online=true;
+        u.lastSeen=Date.now();
+        await userDoc(profile.id).set({online:true,lastSeen:Date.now()},{merge:true});
+      }
+
+      auth.hide();
+      NOVA.go("home");
+      NOVA.toast("Welcome back ✨");
+    }catch(ex){
+      console.error(ex);
+      let msg=ex?.code||"";
+      if(msg==="auth/user-not-found"||msg==="auth/invalid-credential")msg="Account not found or password is incorrect.";
+      else if(msg==="auth/wrong-password")msg="Wrong password.";
+      else if(msg==="auth/too-many-requests")msg="Too many attempts. Try again later.";
+      else if(msg==="auth/invalid-email")msg="Invalid email address.";
+      else msg=ex?.message||"Login failed.";
+      if(err)err.textContent=msg.replace(/^Supabase:\s*/,"");
+    }finally{
+      if(btn){btn.disabled=false;btn.textContent="Log in";}
+    }
+  };
+
+  auth.logout=async function(){
+    try{
+      const u=modules.db.me();
+      if(u)await userDoc(u.id).set({online:false,lastSeen:Date.now()},{merge:true});
+      await fAuth.signOut();
+    }catch(e){console.error(e);}
+    auth.session=null;
+    try{modules.db.stopRealtime?.();}catch(e){}
+    document.body.classList.remove("chat-open");
+    auth.show();
+    auth.render("login");
+  };
+
+  /* Online presence. */
+  setInterval(async()=>{
+    const fu=fAuth.currentUser;
+    const u=modules.db.me();
+    if(!fu||!u)return;
+    try{
+      u.online=true;
+      u.lastSeen=Date.now();
+      await userDoc(u.id).set({online:true,lastSeen:Date.now()},{merge:true});
+    }catch(e){}
+  },30000);
+
+  /* Supabase Auth state is handled by the single APP BOOT listener below. */
+
+  /* Upload media to Supabase Storage instead of storing base64 in Firestore. */
+  const originalPostSubmit=modules.posts.submit.bind(modules.posts);
+  modules.posts.submit=async function(){
+    const file=$("postFile")?.files?.[0];
+    if(file){
+      const info=$("postFileInfo");
+      if(info)info.textContent="Uploading…";
+      try{
+        const url=await uploadFile(file,"nova/posts");
+        const i=$("postImagePreview"),v=$("postVideoPreview");
+        if(v?.dataset.type==="video"){v.dataset.data=url;}
+        else if(i){i.dataset.data=url;}
+      }catch(e){
+        console.error(e);
+        return NOVA.toast("Media upload failed");
+      }
+    }
+    const before=(modules.db.posts||[]).length;
+    const result=originalPostSubmit();
+    const created=(modules.db.posts||[]).length>before?modules.db.posts[0]:null;
+    if(created){
+      const ok=await modules.db.savePostCloud(created.id);
+      if(!ok)NOVA.toast("Post could not be published to cloud");
+    }
+    return result;
+  };
+
+  const originalStorySubmit=modules.stories.submit.bind(modules.stories);
+  modules.stories.submit=async function(){
+    const file=$("storyFile")?.files?.[0];
+    if(file){
+      const info=$("storyFileInfo");
+      if(info)info.textContent="Uploading…";
+      try{
+        const url=await uploadFile(file,"nova/stories");
+        const i=$("storyImagePreview"),v=$("storyVideoPreview");
+        if(v?.dataset.type==="video"){v.dataset.data=url;}
+        else if(i){i.dataset.data=url;}
+      }catch(e){
+        console.error(e);
+        return NOVA.toast("Media upload failed");
+      }
+    }
+    const before=(modules.db.stories||[]).length;
+    const result=originalStorySubmit();
+    const created=(modules.db.stories||[]).length>before?modules.db.stories[0]:null;
+    if(created){
+      const ok=await modules.db.saveStoryCloud(created.id);
+      if(!ok)NOVA.toast("Story could not be published to cloud");
+    }
+    return result;
+  };
+
+  /* Profile avatar -> Supabase Storage. */
+  const originalProfileSave=modules.profile.save.bind(modules.profile);
+  modules.profile.save=async function(){
+    const file=$("editAvatar")?.files?.[0];
+    if(file){
+      try{
+        const url=await uploadFile(file,"nova/avatars");
+        const preview=$("editPreview");
+        if(preview)preview.dataset.data=url;
+      }catch(e){
+        console.error(e);
+        return NOVA.toast("Avatar upload failed");
+      }
+    }
+    return originalProfileSave();
+  };
+
+  /* Chat photo/video -> Supabase Storage. */
+  const originalMedia=modules.messages.media.bind(modules.messages);
+  modules.messages.media=async function(id,type){
+    const input=document.createElement("input");
+    input.type="file";
+    input.accept=type==="image"?"image/*":"video/*";
+    input.onchange=async()=>{
+      const f=input.files[0];
+      if(!f)return;
+      try{
+        NOVA.toast("Uploading…");
+        const data=await uploadFile(f,"nova/messages");
+        const msg=modules.db.sendMessage(id,{kind:type,data,name:f.name});
+        if(msg){
+          
+          this.chat(id);
+          NOVA.toast(type==="image"?"Photo sent":"Video sent");
+        }
+      }catch(e){
+        console.error(e);
+        NOVA.toast("Media upload failed");
+      }
+    };
+    input.click();
+  };
+
+  /* Voice -> Supabase Storage. */
+  const originalRecord=modules.messages.record.bind(modules.messages);
+  modules.messages.record=async function(id){
+    if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder)
+      return NOVA.toast("Voice recording is not supported in this browser");
+    if(NOVA.recording)return;
+    try{
+      const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+      const chunks=[];
+      let mime="";
+      if(MediaRecorder.isTypeSupported("audio/webm;codecs=opus"))mime="audio/webm;codecs=opus";
+      else if(MediaRecorder.isTypeSupported("audio/webm"))mime="audio/webm";
+      const rec=mime?new MediaRecorder(stream,{mimeType:mime}):new MediaRecorder(stream);
+      NOVA.recording=rec;
+      NOVA.recordingStarted=Date.now();
+      $("voiceBtn")?.classList.add("recording");
+      rec.ondataavailable=e=>{if(e.data.size)chunks.push(e.data);};
+      rec.onstop=async()=>{
+        stream.getTracks().forEach(t=>t.stop());
+        const duration=Math.max(1,Math.round((Date.now()-NOVA.recordingStarted)/1000));
+        try{
+          NOVA.toast("Uploading voice…");
+          const blob=new Blob(chunks,{type:rec.mimeType||"audio/webm"});
+          const ext=(rec.mimeType||"").includes("ogg")?"ogg":"webm";
+          const file=new File([blob],"voice."+ext,{type:blob.type});
+          const url=await uploadFile(file,"nova/voice");
+          const msg=modules.db.sendMessage(id,{kind:"voice",data:url,duration,voiceLiked:[]});
+          if(msg){
+            
+            this.chat(id);
+            NOVA.toast("Voice sent");
+          }
+        }catch(e){
+          console.error(e);
+          NOVA.toast("Voice upload failed");
+        }finally{
+          NOVA.recording=null;
+          $("voiceBtn")?.classList.remove("recording");
+        }
+      };
+      rec.start();
+    }catch(e){
+      console.error(e);
+      NOVA.toast("Microphone permission is required");
+    }
+  };
+
+  /* Replace chat background base64 with a Supabase Storage URL. */
+  const originalTheme=modules.messages.theme.bind(modules.messages);
+  modules.messages.theme=async function(id){
+    /* Preserve the original UI/theme flow when no new upload is involved. */
+    return originalTheme(id);
+  };
+
+  window.NOVA_UPLOAD_FILE=uploadFile;
+})();
+
+NOVA.updateNotificationBadge=()=>modules.db.updateNotificationBadge?.();
+
+NOVA.render=function(s){
+
+if(s==="home")
+modules.home.render();
+
+if(s==="explore")
+modules.explore.render();
+
+if(s==="create")
+modules.create.render();
+
+if(s==="messages")
+modules.messages.render();
+
+if(s==="profile")
+modules.profile.render();
+
+if(s==="settings")
+modules.settings.render()
+};
+
+/* LONG PRESS MESSAGE */
+
+function openLongPress(id){
+
+let arr=modules.db.chat(
+modules.db.me().id,
+NOVA.state.activeChat
+);
+
+let m=arr.find(x=>x.id===id);
+
+if(!m)return;
+
+let isMe=m.from===modules.db.me().id;
+
+let types=[
+"heart","laugh","wow",
+"fire","like","sad","angry"
+];
+
+$("longMenu").innerHTML=`
+
+<div class="reactRow">
+
+${types.map(x=>
+`<button
+class="reactChoice"
+data-long-react="${x}"
+data-message-id="${id}">
+${ui.reaction(x)}
+</button>`
+).join("")}
+
+</div>
+
+<div class="longPreview">
+
+${
+m.deleted
+?"Message deleted"
+:m.kind==="text"
+?NOVA.esc(m.text)
+:m.kind==="image"
+?"Photo"
+:m.kind==="video"
+?"Video"
+:"Voice message"
+}
+
+</div>
+
+<div class="longActions">
+
+<button class="longAction"
+data-long-action="reply"
+data-message-id="${id}">
+${ICONS.reply}
+<span>Reply</span>
+</button>
+
+${m.kind==="voice"
+?`<button class="longAction"
+data-long-action="play"
+data-message-id="${id}">
+${ICONS.play}
+<span>Listen</span>
+</button>`
+:""}
+
+${isMe&&!m.deleted
+?`<button class="longAction"
+data-long-action="delete"
+data-message-id="${id}">
+${ICONS.trash}
+<span>Delete message</span>
+</button>`
+:""}
+
+<button class="longAction"
+data-long-action="close">
+×
+<span>Cancel</span>
+</button>
+
+</div>
+`;
+
+$("longPressShade").classList.add("open")
+}
+
+function closeLong(){
+$("longPressShade").classList.remove("open")
+}
+
+function applyMessageReaction(id,type){
+
+let arr=modules.db.chat(
+modules.db.me().id,
+NOVA.state.activeChat
+);
+
+let m=arr.find(x=>x.id===id);
+
+let me=modules.db.me().id;
+
+if(!m)return;
+
+m.reactionBy??={};
+
+let current=m.reactionBy[me]||null;
+
+if(current===type){
+
+delete m.reactionBy[me]
+
+}else{
+
+m.reactionBy[me]=type;
+
+if(m.from!==me){
+
+modules.db.notifyUserCloud(
+ m.from,
+ "message_reaction",
+ me,
+ "reacted to your message",
+ {chat:me,messageId:id}
+);
+
+}
+}
+
+modules.db.saveChatCloud(modules.db.chatKey(modules.db.me().id,NOVA.state.activeChat));
+modules.db.save();
+
+closeLong();
+
+modules.messages.chat(NOVA.state.activeChat)
+}
+
+function deleteMessage(id){
+
+let arr=modules.db.chat(
+modules.db.me().id,
+NOVA.state.activeChat
+);
+
+let m=arr.find(x=>x.id===id);
+
+if(
+m&&
+m.from===modules.db.me().id
+){
+
+m.deleted=true;
+m.text="";
+m.data="";
+m.reactionBy={};
+
+modules.db.saveChatCloud(modules.db.chatKey(modules.db.me().id,NOVA.state.activeChat));
+modules.db.save();
+
+closeLong();
+
+modules.messages.chat(NOVA.state.activeChat);
+NOVA.toast("Message deleted")
+}
+}
+
+/* EVENTS */
+
+document.addEventListener("click",e=>{
+
+let go=e.target.closest("[data-go]");
+
+if(go){
+
+NOVA.go(go.dataset.go);
+return
+}
+
+let authTab=e.target.closest("[data-auth]");
+
+if(authTab){
+
+auth.render(authTab.dataset.auth);
+return
+}
+
+let nr=e.target.closest("[data-notif-type]");
+if(nr){
+  const type=nr.dataset.notifType;
+  if((type==="message"||type==="message_reaction")&&nr.dataset.chat){
+    NOVA.state.activeChat=nr.dataset.chat;
+    NOVA.go("messages");
+  }else if((type==="like"||type==="comment"||type==="reaction")&&nr.dataset.post){
+    NOVA.closeModal();
+    NOVA.go("home");
+    setTimeout(()=>document.getElementById(`post-${CSS.escape(nr.dataset.post)}`)?.scrollIntoView({behavior:"smooth",block:"center"}),120);
+  }else if((type==="story_reaction"||type==="story_reply")&&nr.dataset.story){
+    const st=modules.db.stories.find(x=>x.id===nr.dataset.story);
+    if(st){modules.stories.openUser(st.user);}
+  }
+  return;
+}
+
+let act=e.target.closest("[data-action]");
+
+if(act){
+
+let x=act.dataset.action;
+
+if(x==="create"||x==="createPost")
+modules.posts.create();
+
+if(x==="createStory")
+modules.stories.create();
+
+if(x==="closeModal")
+NOVA.closeModal();
+
+if(x==="editProfile")
+modules.profile.edit();
+
+if(x==="logout")
+auth.logout();
+
+if(x==="switchAccount")
+auth.switch();
+
+if(x==="ownerVerified")
+modules.owner.open();
+
+if(x==="ownerDeleteAllChats")
+modules.owner.deleteAllChats();
+
+if(x==="reset"){
+
+if(confirm("Delete all NOVA local data?")){
+localStorage.clear();
+location.reload()
+}
+
+}
+
+if(x==="notifications")
+modules.notifications.show();
+
+if(x==="search"){
+
+NOVA.go("explore");
+
+setTimeout(
+()=>$("exploreSearch")?.focus(),
+60
+)
+
+}
+
+return
+}
+
+let profStoryEl=e.target.closest("[data-profile-story]");
+if(profStoryEl){ modules.stories.openUser(profStoryEl.dataset.profileStory); return; }
+
+let sc=e.target.closest("[data-story-create]");
+
+if(sc){
+
+modules.stories.create();
+return
+}
+
+let su=e.target.closest("[data-story-user]");
+
+if(su){
+
+modules.stories.openUser(
+su.dataset.storyUser
+);
+
+return
+}
+
+let sr=e.target.closest("[data-story-react]");
+
+if(sr){
+
+modules.stories.react(
+sr.dataset.storyReact
+);
+
+return
+}
+
+if(e.target.closest("[data-story-reply]")){
+
+modules.stories.reply();
+return
+}
+
+let stm=e.target.closest("[data-story-menu]");
+if(stm){
+  const id=stm.dataset.storyMenu;
+  const story=modules.db.stories.find(x=>x.id===id);
+  if(story && (story.user===modules.db.me()?.id || modules.db.isOwner())){
+    NOVA.modal("Story options",`<div class="card"><button class="option" data-story-delete-confirm="${id}" style="width:100%;text-align:left"><div class="icon">${NOVA_DELETE_SVG}</div><div class="optionMain"><b>Delete story</b><span>Remove it for everyone</span></div>›</button></div>`);
+  }
+  return;
+}
+let sdc=e.target.closest("[data-story-delete-confirm]");
+if(sdc){
+  const id=sdc.dataset.storyDeleteConfirm, story=modules.db.stories.find(x=>x.id===id);
+  if(story && (story.user===modules.db.me()?.id || modules.db.isOwner()) && confirm("Delete this story for everyone?")){
+    modules.db.deleteStoryCloud(id,story).then(ok=>{
+      if(ok){ modules.db.stories=(modules.db.stories||[]).filter(x=>x.id!==id); NOVA.closeModal(); modules.stories.close(); NOVA.render(NOVA.state.screen); NOVA.toast("Story deleted for everyone ✓"); }
+    });
+  }
+  return;
+}
+
+if(e.target.closest("[data-story-close]")){
+
+modules.stories.close();
+return
+}
+
+if(e.target.closest("[data-story-next]")){
+
+modules.stories.next();
+return
+}
+
+if(e.target.closest("[data-story-prev]")){
+
+modules.stories.prev();
+return
+}
+
+let pf=e.target.closest("[data-profile-tab]");
+
+if(pf){
+
+let owner=
+pf.dataset.profileOwner||
+modules.db.me().id;
+
+NOVA.state.profileTab=
+pf.dataset.profileTab;
+
+modules.profile.renderUser(
+owner,
+owner===modules.db.me().id
+);
+
+return
+}
+
+let followersBtn=e.target.closest("[data-followers]");
+if(followersBtn){ const id=followersBtn.dataset.followers; const list=modules.db.followerList(id); NOVA.modal("Followers",`<div class="card">${list.map(u=>`<div class="people" data-user="${u.id}">${ui.avatar(u,"sm")}<div class="userInfo"><div class="name">${ui.name(u)}</div><div class="handle">${NOVA.esc(u.handle||"")}</div></div></div>`).join("")||`<div class="empty">No followers yet</div>`}</div>`); return; }
+let followingBtn=e.target.closest("[data-following]");
+if(followingBtn){ const id=followingBtn.dataset.following; const list=modules.db.followingList(id); NOVA.modal("Following",`<div class="card">${list.map(u=>`<div class="people" data-user="${u.id}">${ui.avatar(u,"sm")}<div class="userInfo"><div class="name">${ui.name(u)}</div><div class="handle">${NOVA.esc(u.handle||"")}</div></div></div>`).join("")||`<div class="empty">Not following anyone yet</div>`}</div>`); return; }
+
+let fl=e.target.closest("[data-follow]");
+
+if(fl){
+
+let id=fl.dataset.follow;
+
+modules.db.following(id)
+?modules.db.unfollow(id)
+:modules.db.follow(id);
+
+NOVA.render(NOVA.state.screen);
+
+return
+}
+
+let user=e.target.closest("[data-user]");
+
+if(
+user&&
+!e.target.closest("[data-follow]")
+){
+
+modules.profile.showUser(
+user.dataset.user
+);
+
+return
+}
+
+let po=e.target.closest("[data-post]");
+
+if(po){
+
+let id=po.dataset.id;
+let x=po.dataset.post;
+
+if(x==="like")modules.posts.like(id);
+if(x==="comments")modules.posts.comments(id);
+if(x==="reaction")modules.posts.reaction(id);
+if(x==="repost")modules.posts.repost(id);
+if(x==="save")modules.posts.save(id);
+if(x==="share")modules.posts.share(id);
+if(x==="menu")modules.posts.menu(id);
+
+return
+}
+
+let rr=e.target.closest("[data-reaction]");
+
+if(rr){
+
+modules.posts.react(
+rr.dataset.id,
+rr.dataset.reaction
+);
+
+return
+}
+
+let vb=e.target.closest("[data-verified-user]");
+if(vb){
+modules.owner.toggle(vb.dataset.verifiedUser);
+return
+}
+
+let cm=e.target.closest("[data-comment]");
+
+if(cm){
+
+modules.posts.addComment(
+cm.dataset.comment
+);
+
+return
+}
+
+let menu=e.target.closest("[data-menu]");
+
+if(menu){
+
+if(menu.dataset.menu==="stats"){
+
+let p=modules.db.post(
+menu.dataset.id
+);
+
+NOVA.modal(
+"Statistics",
+`<div class="empty">
+<b>${p.likes.length}</b> Likes
+<br><br>
+<b>${p.comments.length}</b> Comments
+<br><br>
+<b>${p.reposts||0}</b> Reposts
+</div>`
+)
+
+}
+
+if(menu.dataset.menu==="delete"){
+
+if(confirm("Delete this post?")){
+
+const deletingId=menu.dataset.id;
+modules.db.deletePostCloud(deletingId).then(ok=>{
+  if(ok){ NOVA.closeModal(); NOVA.render(NOVA.state.screen); NOVA.toast("Post deleted for everyone ✓"); }
+});
+
+}
+
+}
+
+return
+}
+
+if(e.target.closest("[data-profile-save]")){
+
+modules.profile.save();
+return
+}
+
+if(e.target.closest("[data-create-submit]")){
+
+modules.posts.submit();
+return
+}
+
+if(e.target.closest("[data-story-submit]")){
+
+modules.stories.submit();
+return
+}
+
+let chat=e.target.closest("[data-chat]");
+
+if(chat){
+
+NOVA.state.activeChat=
+chat.dataset.chat;
+
+NOVA.state.chatProfile=null;
+NOVA.state.replyTo=null;
+
+NOVA.go("messages");
+
+return
+}
+
+if(e.target.closest("[data-chat-back]")){
+
+NOVA.state.activeChat=null;
+NOVA.state.chatProfile=null;
+NOVA.state.replyTo=null;
+
+document.body.classList.remove("chat-open");
+
+NOVA.go("messages");
+
+return
+}
+
+let cp=e.target.closest("[data-chat-profile]");
+
+if(cp){
+
+modules.profile.showUser(
+cp.dataset.chatProfile
+);
+
+return
+}
+
+let sp=e.target.closest("[data-start-chat]");
+
+if(sp){
+
+NOVA.state.activeChat=
+sp.dataset.startChat;
+
+NOVA.state.chatProfile=null;
+
+NOVA.go("messages");
+
+return
+}
+
+let sm=e.target.closest("[data-send-message]");
+
+if(sm){
+
+modules.messages.send(
+sm.dataset.sendMessage
+);
+
+return
+}
+
+if(e.target.closest("[data-attach-open]")){
+
+$("attachMenu")?.classList.toggle("open");
+
+return
+}
+
+let at=e.target.closest("[data-attach]");
+
+if(at){
+
+$("attachMenu")?.classList.remove("open");
+
+let id=NOVA.state.activeChat;
+
+if(at.dataset.attach==="photo")
+modules.messages.media(id,"image");
+
+if(at.dataset.attach==="video")
+modules.messages.media(id,"video");
+
+if(at.dataset.attach==="voice")
+modules.messages.record(id);
+
+return
+}
+
+let th=e.target.closest("[data-chat-theme]");
+
+if(th){
+
+modules.messages.theme(
+th.dataset.chatTheme
+);
+
+return
+}
+
+let tc=e.target.closest("[data-theme-choice]");
+
+if(tc){
+
+modules.messages.setTheme(
+tc.dataset.chatId,
+tc.dataset.themeChoice
+);
+
+return
+}
+
+if(e.target.closest("[data-clear-reply]")){
+
+NOVA.state.replyTo=null;
+
+if(NOVA.state.activeChat)
+modules.messages.chat(
+NOVA.state.activeChat
+);
+
+return
+}
+
+let vp=e.target.closest("[data-voice-play]");
+
+if(vp){
+
+let audio=$(
+"audio_"+vp.dataset.voicePlay
+);
+
+if(!audio)return;
+
+if(audio.paused){
+
+document.querySelectorAll("audio").forEach(a=>{
+if(a!==audio)a.pause()
+});
+
+audio.play().catch(()=>{});
+
+vp.innerHTML=ICONS.pause
+
+}else{
+
+audio.pause();
+
+vp.innerHTML=ICONS.play
+
+}
+
+audio.onended=()=>{
+vp.innerHTML=ICONS.play
+};
+
+return
+}
+
+let vl=e.target.closest("[data-voice-like]");
+
+if(vl){
+
+let arr=modules.db.chat(
+modules.db.me().id,
+NOVA.state.activeChat
+);
+
+let m=arr.find(
+x=>x.id===vl.dataset.voiceLike
+);
+
+if(!m)return;
+
+let me=modules.db.me().id;
+
+m.voiceLiked??=[];
+
+m.voiceLiked.includes(me)
+?m.voiceLiked=m.voiceLiked.filter(x=>x!==me)
+:m.voiceLiked.push(me);
+
+modules.db.saveChatCloud(modules.db.chatKey(modules.db.me().id,NOVA.state.activeChat));
+modules.db.save();
+
+modules.messages.chat(NOVA.state.activeChat);
+
+return
+}
+
+let lr=e.target.closest("[data-long-react]");
+
+if(lr){
+
+applyMessageReaction(
+lr.dataset.messageId,
+lr.dataset.longReact
+);
+
+return
+}
+
+let la=e.target.closest("[data-long-action]");
+
+if(la){
+
+let id=la.dataset.messageId;
+let x=la.dataset.longAction;
+
+if(x==="close")
+closeLong();
+
+if(x==="delete")
+deleteMessage(id);
+
+if(x==="reply"){
+
+NOVA.state.replyTo=id;
+
+closeLong();
+
+modules.messages.chat(
+NOVA.state.activeChat
+);
+
+setTimeout(
+()=>$("messageInput")?.focus(),
+40
+)
+
+}
+
+if(x==="play"){
+
+let a=$("audio_"+id);
+
+if(a)
+a.play().catch(()=>{})
+
+}
+
+return
+}
+
+let setting=e.target.closest("[data-setting]");
+
+if(setting){
+
+modules.db.settings[
+setting.dataset.setting
+]=setting.checked;
+
+modules.db.save();
+
+return
+}
+
+});
+
+$("modalBg").addEventListener("click",e=>{
+
+if(e.target===$("modalBg"))
+NOVA.closeModal()
+
+});
+
+$("longPressShade").addEventListener("click",e=>{
+
+if(e.target===$("longPressShade"))
+closeLong()
+
+});
+
+let typingTimer=null;
+let typingKey="";
+function novaSetTyping(active){
+  const me=modules.db.me()?.id;
+  const other=NOVA.state.activeChat;
+  if(!me||!other||!window.NOVA_BACKEND?.db)return;
+  const key=modules.db.chatKey(me,other);
+  typingKey=key;
+  const ref=window.NOVA_BACKEND.db.collection("chats").doc(key);
+  ref.set({participants:[me,other].sort(),[`typing.${me}`]:!!active,updated:Date.now()},{merge:true}).catch(()=>{});
+}
+document.addEventListener("input",e=>{
+  if(e.target.id!=="messageInput"||!NOVA.state.activeChat||!modules.db.me())return;
+  novaSetTyping(true);
+  clearTimeout(typingTimer);
+  typingTimer=setTimeout(()=>novaSetTyping(false),1200);
+});
+document.addEventListener("blur",e=>{
+  if(e.target?.id==="messageInput"){clearTimeout(typingTimer);novaSetTyping(false);}
+},true);
+
+/* KEYBOARD */
+
+document.addEventListener("keydown",e=>{
+
+if(e.key==="Escape"){
+
+NOVA.closeModal();
+modules.stories.close();
+closeLong()
+
+}
+
+if(
+e.key==="Enter"&&
+!e.shiftKey&&
+e.target.id==="commentInput"
+){
+
+e.preventDefault();
+
+modules.posts.addComment(
+e.target
+.closest(".chatInput")
+?.querySelector("[data-comment]")
+?.dataset.comment
+)
+
+}
+
+if(
+e.key==="Enter"&&
+!e.shiftKey&&
+e.target.id==="messageInput"
+){
+
+e.preventDefault();
+
+if(NOVA.state.activeChat)
+modules.messages.send(
+NOVA.state.activeChat
+)
+
+}
+
+if(
+e.key==="Enter"&&
+!e.shiftKey&&
+e.target.id==="storyReplyInput"
+){
+
+e.preventDefault();
+
+modules.stories.reply()
+
+}
+
+});
+
+/* LONG PRESS + SWIPE REPLY */
+
+document.addEventListener("pointerdown",e=>{
+
+let b=e.target.closest("[data-message]");
+
+if(!b||e.button!==0)return;
+
+let id=b.dataset.message;
+
+let startX=e.clientX;
+let moved=false;
+
+NOVA.state.pressTimer=setTimeout(()=>{
+
+if(!moved)
+openLongPress(id)
+
+},520);
+
+let move=ev=>{
+
+if(Math.abs(ev.clientX-startX)>35){
+
+moved=true;
+
+clearTimeout(
+NOVA.state.pressTimer
+);
+
+let dx=Math.max(
+0,
+Math.min(80,ev.clientX-startX)
+);
+
+if(dx>8)
+b.style.transform=
+`translateX(${dx}px)`;
+
+if(dx>=60){
+
+NOVA.state.replyTo=id;
+
+clearTimeout(
+NOVA.state.pressTimer
+);
+
+}
+
+}
+
+};
+
+let up=()=>{
+
+clearTimeout(
+NOVA.state.pressTimer
+);
+
+let dx=e.clientX-startX;
+
+b.style.transform="";
+
+document.removeEventListener(
+"pointermove",
+move
+);
+
+document.removeEventListener(
+"pointerup",
+up
+);
+
+if(dx>=60){
+
+modules.messages.chat(
+NOVA.state.activeChat
+);
+
+setTimeout(
+()=>$("messageInput")?.focus(),
+40
+)
+
+}
+
+};
+
+document.addEventListener(
+"pointermove",
+move,
+{passive:true}
+);
+
+document.addEventListener(
+"pointerup",
+up,
+{once:true}
+);
+
+});
+
+/* VOICE PRESS */
+
+document.addEventListener("pointerdown",e=>{
+
+let btn=e.target.closest("[data-record]");
+
+if(!btn)return;
+
+if(!NOVA.state.activeChat)return;
+
+NOVA.state.voicePress=true;
+
+NOVA.state.voiceTimer=setTimeout(()=>{
+
+if(NOVA.state.voicePress)
+modules.messages.record(
+NOVA.state.activeChat
+)
+
+},280)
+
+});
+
+document.addEventListener("pointerup",e=>{
+
+if(!NOVA.state.voicePress)return;
+
+NOVA.state.voicePress=false;
+
+clearTimeout(
+NOVA.state.voiceTimer
+);
+
+if(NOVA.recording)
+modules.messages.stopRecord()
+
+});
+
+/* STORY SWIPE */
+
+let storyTouchStart=0;
+
+$("viewer").addEventListener(
+"touchstart",
+e=>{
+storyTouchStart=
+e.changedTouches[0].clientX
+},
+{passive:true}
+);
+
+$("viewer").addEventListener(
+"touchend",
+e=>{
+
+let dx=
+e.changedTouches[0].clientX-
+storyTouchStart;
+
+if(Math.abs(dx)>80){
+
+if(dx<0)
+modules.stories.next();
+else
+modules.stories.prev()
+
+}
+
+},
+{passive:true}
+);
+
+/* VISIBILITY */
+
+document.addEventListener("visibilitychange",()=>{
+
+if(document.hidden){
+
+let v=$("storyVideo");
+
+if(v)
+v.pause();
+
+document.querySelectorAll("audio")
+.forEach(a=>a.pause())
+
+}
+});
+
+/* APP BOOT — online Supabase session */
+(async()=>{
+  try{
+    auth.hide();
+    auth.render("login");
+
+    /* Wait for Supabase Auth's first state callback. */
+    if(window.NOVA_BACKEND?.auth){
+      await new Promise(resolve=>{
+        let done=false;
+        const unsub=window.NOVA_BACKEND.auth.onAuthStateChanged(async user=>{
+          if(done)return;
+          done=true;
+          unsub();
+          if(!user){
+            auth.show();
+            auth.render("login");
+            resolve();
+            return;
+          }
+          try{
+            const profile=await (async()=>{
+              const snap=await window.NOVA_BACKEND.db.collection("users").doc(user.uid).get();
+              if(snap.exists)return {id:user.uid,...snap.data()};
+              const p={
+                id:user.uid,name:user.displayName||"NOVA User",
+                handle:"@"+(user.displayName||"novauser").toLowerCase().replace(/[^a-z0-9]/g,"").slice(0,14)+Math.floor(Math.random()*90+10),
+                bio:"New on NOVA 🚀",avatar:"",followers:0,following:0,
+                followingUsers:[],online:true,verified:false,created:Date.now()
+              };
+              await window.NOVA_BACKEND.db.collection("users").doc(user.uid).set(p,{merge:true});
+              return p;
+            })();
+            auth.session={userId:profile.id,email:user.email||""};
+            await modules.db.init();
+            auth.hide();
+            NOVA.go("home");
+          }catch(e){
+            console.error(e);
+            auth.show();
+            auth.render("login");
+            const er=$("authBody").querySelector("#authError");
+            if(er)er.textContent="Could not load NOVA data: "+(e?.message||"Supabase error");
+          }
+          resolve();
+        });
+      });
+    }else{
+      auth.show();
+      auth.render("login");
+    }
+  }catch(e){
+    console.error(e);
+    auth.show();
+    auth.render("login");
+  }
+})();
+
+/* Keep the current user online in Firestore. */
+setInterval(async()=>{
+  try{
+    const fu=window.NOVA_BACKEND?.auth?.currentUser;
+    const u=modules.db.me();
+    if(fu&&u){
+      u.online=true;
+      u.lastSeen=Date.now();
+      await window.NOVA_BACKEND.db.collection("users").doc(u.id).set({
+        online:true,lastSeen:Date.now()
+      },{merge:true});
+    }
+  }catch(e){}
+},15000);
+
+/* STOP MEDIA */
+
+window.addEventListener("beforeunload",()=>{
+
+try{
+
+let v=$("storyVideo");
+
+if(v)
+v.pause();
+
+document.querySelectorAll("audio")
+.forEach(a=>a.pause());
+
+let u=modules.db.me();
+
+if(u){
+u.online=false;
+modules.db.save()
+}
+
+}catch(e){}
+
+});
+
+/* iOS keyboard: keep composer visible */
+window.visualViewport?.addEventListener("resize",()=>{
+
+if(!document.body.classList.contains("chat-open"))
+return;
+
+let chat=document.querySelector(".chat");
+
+if(!chat)return;
+
+requestAnimationFrame(()=>{
+let input=$("messageInput");
+
+if(
+document.activeElement===input
+){
+setTimeout(()=>{
+let box=$("chatMessages");
+if(box)box.scrollTop=box.scrollHeight
+},80)
+}
+})
+
+});
 </script>
 </body>
 </html>
